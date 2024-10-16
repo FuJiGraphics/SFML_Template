@@ -1,14 +1,16 @@
 project "Workspace"
-location "Workspace"
-kind "ConsoleApp"
-language "C++"
-cppdialect "C++17"
-staticruntime "off"
-systemversion "latest"
+	location "Workspace"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "off"
+	systemversion "latest"
 
 -- pchheader "pch.h"
 -- pchsource "%{prj.name}/src/pch.cpp"
 
+-- 작업 디렉토리 설정 (상대 경로 설정)
+-- debugdir
 targetdir("../Build/Bin/"..outputDir.."/%{prj.name}")
 objdir("../Build/Bin-int/"..outputDir.."/%{prj.name}")
 
@@ -58,11 +60,11 @@ defines
 }
 
 filter "configurations:Debug"
-defines "DEF_DEBUG"
-runtime "Debug"
-symbols "On"
+	defines "DEF_DEBUG"
+	runtime "Debug"
+	symbols "On"
 
 filter "configurations:Release"
-defines "DEF_RELEASE"
-runtime "Release"
-optimize "On"
+	defines "DEF_RELEASE"
+	runtime "Release"
+	optimize "On"
