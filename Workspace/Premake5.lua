@@ -16,7 +16,8 @@ objdir("../Build/Bin-int/"..outputDir.."/%{prj.name}")
 
 files
 {
-	"%{prj.name}/main.cpp",
+	"%{prj.name}/**.cpp",
+	"%{prj.name}/**.h"
 }
 
 includedirs
