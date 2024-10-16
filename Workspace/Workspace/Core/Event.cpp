@@ -36,4 +36,4 @@ namespace fz {
         return !(m_used);
     }
 
-}
+} // namespace fz

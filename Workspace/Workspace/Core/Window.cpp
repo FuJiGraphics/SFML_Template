@@ -67,4 +67,4 @@ namespace fz {
 		return (*m_hwnd);
 	}
 
-}
+} // namespace fz

@@ -48,4 +48,4 @@ namespace fz {
         return (s_numOfLayers);
     }
 
-}
+} // namespace fz

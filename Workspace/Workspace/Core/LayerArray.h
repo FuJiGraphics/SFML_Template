@@ -31,4 +31,4 @@ namespace fz {
 		int						m_InsertIndex;
 	};
 
-} 
+} // namespace fz

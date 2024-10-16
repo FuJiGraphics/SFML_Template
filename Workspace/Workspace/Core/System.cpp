@@ -45,6 +45,8 @@ namespace fz {
 
 		m_window = new Window(width, height, title);
 		m_window->Create();
+		m_width = width;
+		m_height = height;
 	}
 
 	void System::Run()
@@ -88,6 +90,16 @@ namespace fz {
 		}
 	}
 
+	int System::GetWidth()
+	{
+		return (m_width);
+	}
+
+	int System::GetHeight()
+	{
+		return (m_height);
+	}
+
 	sf::RenderWindow& System::GetDevice()
 	{
 		return (m_window->GetHandle());
@@ -96,6 +108,8 @@ namespace fz {
 	System::System()
 		: m_window(nullptr)
 		, m_layerArray(nullptr)
+		, m_width(0)
+		, m_height(0)
 	{
 		m_layerArray = new LayerArray();
 	}
@@ -115,4 +129,4 @@ namespace fz {
 		}
 	}
 
-} 
+} // namespace fz

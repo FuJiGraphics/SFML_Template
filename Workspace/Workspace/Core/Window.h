@@ -24,5 +24,5 @@ namespace fz {
 		bool				m_isOpen;	// 윈도우 활성화 여부
 	};
 
-}
+} // namespace fz
 

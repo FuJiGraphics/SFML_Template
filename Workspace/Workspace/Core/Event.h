@@ -20,4 +20,4 @@ namespace fz {
         bool        m_used;
     };
 
-}
+} // namespace fz

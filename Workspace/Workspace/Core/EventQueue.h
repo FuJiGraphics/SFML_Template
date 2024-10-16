@@ -23,4 +23,4 @@ namespace fz {
         std::vector<Event>  m_eventQueue;
     };
 
-}
+} // namespace fz

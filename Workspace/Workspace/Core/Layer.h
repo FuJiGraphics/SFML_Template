@@ -23,4 +23,4 @@ namespace fz {
 		static unsigned int		s_numOfLayers;
 	};
 
-} // namespace Normal
+} // namespace fz

@@ -38,4 +38,4 @@ namespace fz {
         return (m_eventQueue.end());
     }
 
-}
+} // namespace fz

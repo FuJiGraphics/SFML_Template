@@ -109,4 +109,4 @@ namespace fz {
 		return (m_LayerArray.end());
 	}
 
-}
+} // namespace fz
