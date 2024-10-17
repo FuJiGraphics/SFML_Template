@@ -33,7 +33,7 @@ namespace fz {
 
     bool Event::empty() const
     {
-        return !(m_used);
+        return (m_used);
     }
 
 } // namespace fz

@@ -25,13 +25,14 @@ namespace fz {
 		}
 	}
 
-	bool LayerArray::InsertLayer(Layer* pLevel)
+	bool LayerArray::InsertLayer(Layer* pLayer)
 	{
 		bool result = false;
-		auto findLevel = this->find(pLevel);
+		auto findLevel = this->find(pLayer);
 		if (findLevel == this->end())
 		{
-			m_LayerArray.emplace_back(pLevel);
+			// m_LayerArray.emplace_back(pLevel);
+			m_AddLayerBuffer.push_back(pLayer);
 			result = true;
 		}
 		return (result);
@@ -43,21 +44,23 @@ namespace fz {
 		auto findOverlay = this->find(pOverlay);
 		if (findOverlay == m_LayerArray.end())
 		{
-			m_LayerArray.emplace(m_LayerArray.begin() + m_InsertIndex, pOverlay);
-			m_InsertIndex++;
+			// m_LayerArray.emplace(m_LayerArray.begin() + m_InsertIndex, pOverlay);
+			// m_InsertIndex++;
+			m_AddOverlayBuffer.push_back(pOverlay);
 			result = true;
 		}
 		return (result);
 	}
 
-	bool LayerArray::RemoveLayer(Layer* pLevel)
+	bool LayerArray::RemoveLayer(Layer* pLayer)
 	{
 		bool result = false;
-		auto findLevel = this->find(pLevel);
-		if (findLevel != m_LayerArray.end())
+		auto findLayer = this->find(pLayer);
+		if (findLayer != m_LayerArray.end())
 		{
-			m_LayerArray.erase(findLevel);
-			m_InsertIndex--;
+			// m_LayerArray.erase(findLevel);
+			// m_InsertIndex--;
+			m_DeleteLayerBuffer.push_back(pLayer);
 			result = true;
 		}
 		return (result);
@@ -69,10 +72,47 @@ namespace fz {
 		auto findOverlay = this->find(pOverlay);
 		if (findOverlay != m_LayerArray.end())
 		{
-			m_LayerArray.erase(findOverlay);
+			// m_LayerArray.erase(findOverlay);
+			m_DeleteOverlayBuffer.push_back(pOverlay);
 			result = true;
 		}
 		return (result);
+	}
+
+	void LayerArray::WorkingInsertLayers()
+	{
+		for (Layer* addLayer : m_AddLayerBuffer)
+		{
+			m_LayerArray.emplace_back(addLayer);
+		}
+		for (Layer* addOverlay : m_AddOverlayBuffer)
+		{
+			m_LayerArray.emplace(m_LayerArray.begin() + m_InsertIndex, addOverlay);
+			m_InsertIndex++;
+		}
+		m_AddLayerBuffer.clear();
+		m_AddOverlayBuffer.clear();
+	}
+
+	void LayerArray::WorkingGarbage()
+	{
+		for (Layer* delLayer : m_DeleteLayerBuffer)
+		{
+			m_LayerArray.erase(this->find(delLayer));
+			m_InsertIndex--;
+			delLayer->OnDetach();
+			delete delLayer;
+			delLayer = nullptr;
+		}
+		for (Layer* delOverlay : m_DeleteOverlayBuffer)
+		{
+			m_LayerArray.erase(this->find(delOverlay));
+			delOverlay->OnDetach();
+			delete delOverlay;
+			delOverlay = nullptr;
+		}
+		m_DeleteLayerBuffer.clear();
+		m_DeleteOverlayBuffer.clear();
 	}
 
 	LayerArray::iter LayerArray::find(Layer* target)

@@ -54,6 +54,8 @@ namespace fz {
 				case sf::Event::Closed:
 					m_isOpen = false;
 					break;
+				case sf::Event::GainedFocus:
+					break;
 				default:
 					if (dst) {
 						dst->push(ev);

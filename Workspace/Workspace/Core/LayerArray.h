@@ -18,6 +18,8 @@ namespace fz {
 		bool		InsertOverlay(Layer* pOverlay);
 		bool		RemoveLayer(Layer* pLevel);
 		bool		RemoveOverlay(Layer* pOverlay);
+		void		WorkingInsertLayers();
+		void		WorkingGarbage();
 
 		iter		find(Layer* target);
 		bool		empty() const;
@@ -28,6 +30,10 @@ namespace fz {
 
 	private:
 		std::vector<Layer*>		m_LayerArray;
+		std::vector<Layer*>		m_AddLayerBuffer;
+		std::vector<Layer*>		m_AddOverlayBuffer;
+		std::vector<Layer*>		m_DeleteLayerBuffer;
+		std::vector<Layer*>		m_DeleteOverlayBuffer;
 		int						m_InsertIndex;
 	};
 

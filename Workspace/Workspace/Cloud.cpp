@@ -50,25 +50,29 @@ void Cloud::ResetPos()
 	// 포지션 설정
 	m_dir = GetRandom(0, 1) ? Direction::Left : Direction::Right;
 	m_pos.x = (m_dir == Direction::Right) ? s_wall.left : s_wall.width;
-	m_pos.y = (float)GetRandom(0, 300);
+	m_pos.y = (float)GetRandom(0, 250);
 	m_cloud.setPosition(m_pos);
 	if (m_dir == Direction::Left)
 		m_cloud.setScale(-1.0f, 1.0f);
 	else
 		m_cloud.setScale(1.0f, 1.0f);
 	// 스피드 설정
-	m_speed = (float)GetRandom(100, 200);
+	m_speed = (float)GetRandom(50, 100);
 }
 
 void Cloud::Move(float dt, Direction dir, float speed)
 {
+	static float f = 0.0f;
+	f = (f < 6.3f) ? f + (0.003f) : 0.0f;
 	switch (dir)
 	{
 		case Direction::Left:
 			m_pos.x -= (speed * dt);
+			m_pos.y += (20.0f * dt) * sin(f);
 			break;
 		case Direction::Right:
 			m_pos.x += (speed * dt);
+			m_pos.y += (20.0f * dt) * sin(f);
 			break;
 	}
 	m_cloud.setPosition(m_pos);

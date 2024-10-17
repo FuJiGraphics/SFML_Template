@@ -38,6 +38,20 @@ namespace fz {
 		pOverlay->OnAttach();
 	}
 
+	void System::DetachLayer(Layer* pLayer)
+	{
+		System& system = System::GetInstance();
+		system.m_layerArray->RemoveLayer(pLayer);
+		pLayer->OnDetach();
+	}
+
+	void System::DetachOverlay(Layer* ppOverlay)
+	{
+		System& system = System::GetInstance();
+		system.m_layerArray->RemoveOverlay(ppOverlay);
+		ppOverlay->OnDetach();
+	}
+
 	void System::CreateWindow(int width, int height, const char* title)
 	{
 		if (m_window != nullptr)
@@ -55,7 +69,10 @@ namespace fz {
 		while (m_window->IsOpen())
 		{
 			EventQueue eventQueue;
-			float dt = clock.restart().asSeconds();
+			static float timeScale = 1.0f;
+ 			float dt = clock.restart().asSeconds() * timeScale;
+			// 레이어 추가 요청 처리
+			m_layerArray->WorkingInsertLayers();
 
 			// 이벤트 루프
 			m_window->Event(&eventQueue);
@@ -63,6 +80,21 @@ namespace fz {
 			// Layer 이벤트 전송
 			for (auto& event : eventQueue)
 			{
+				switch (event.get().type)
+				{
+					// 일시 정지
+					case sf::Event::KeyPressed:
+					{
+						switch (event.get().key.code)
+						{
+						case sf::Keyboard::Return:
+							m_isPause = (m_isPause == false) ? true : false;
+							timeScale = (timeScale == 0.0f) ? 1.0f : 0.0f;
+							break;
+						}
+					}
+				}
+
 				for (auto layer : (*m_layerArray))
 				{
 					if (!event.empty())
@@ -73,20 +105,28 @@ namespace fz {
 			}
 
 			// Layer 업데이트
-			for (auto layer : (*m_layerArray))
+			if (!m_isPause)
 			{
-				layer->OnUpdate(dt);
+				for (auto layer : (*m_layerArray))
+				{
+					layer->OnUpdate(dt);
+				}
 			}
 
-			// Layer 업데이트
+			// 삭제 요청된 레이어 정리
+			m_layerArray->WorkingGarbage();
+			
 			auto& device = m_window->GetHandle();
 			device.clear();
 			for (auto layer : (*m_layerArray))
 			{
 				layer->OnDraw(device);
 			}
+			for (auto layer : (*m_layerArray))
+			{
+				layer->OnUI(device);
+			}
 			device.display();
-
 		}
 	}
 
@@ -110,6 +150,7 @@ namespace fz {
 		, m_layerArray(nullptr)
 		, m_width(0)
 		, m_height(0)
+		, m_isPause(false)
 	{
 		m_layerArray = new LayerArray();
 	}

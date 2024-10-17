@@ -15,6 +15,8 @@ namespace fz {
 		static void			Delete();
 		static void			AttachLayer(Layer* pLayer);
 		static void			AttachOverlay(Layer* pOverlay);
+		static void			DetachLayer(Layer* ppLayer);
+		static void			DetachOverlay(Layer* ppOverlay);
 
 		void				CreateWindow(int width, int height, const char* title);	// 윈도우를 생성한다.
 		void				Run();
@@ -33,6 +35,7 @@ namespace fz {
 		LayerArray*		m_layerArray;
 		int				m_width;
 		int				m_height;
+		bool			m_isPause;
 		static System*	s_system;
 	};
 

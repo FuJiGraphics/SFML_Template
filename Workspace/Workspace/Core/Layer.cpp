@@ -36,6 +36,12 @@ namespace fz {
 
     void Layer::OnDraw(sf::RenderWindow& device)
     {
+        // Empty
+    }
+
+    void Layer::OnUI(sf::RenderWindow& device)
+    {
+        // Empty
     }
 
     std::string Layer::GetName() const
