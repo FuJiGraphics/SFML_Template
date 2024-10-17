@@ -48,12 +48,12 @@ void Tree::OnEvent(fz::Event& event)
 	if (ev.type == ev.KeyPressed && Keyboard::isKeyPressed(Keyboard::Left))
 	{
 		this->CutOff();
-		// event.use();
+		event.use();
 	}
 	if (ev.type == ev.KeyPressed && Keyboard::isKeyPressed(Keyboard::Right))
 	{
 		this->CutOff();
-		// event.use();
+		event.use();
 	}
 }
 
@@ -63,13 +63,14 @@ bool Tree::CutOff()
 
 	auto& treeSize = m_tree.getLocalBounds();
 	auto& treeOrigin = m_tree.getOrigin();
-	sf::Vector2f branchOrigin(treeOrigin.x * -1.0f, treeOrigin.y);
-	sf::Vector2f branchPos(m_pos.x, GetRandom(treeSize.height * -1.0f, -150.0f));
 
 	bool flip = true;
 	int branchSize = m_Branches.size();
 	for (int i = 0; i < branchSize; ++i)
 	{
+		sf::Vector2f branchOrigin(treeOrigin.x * -1.0f, treeOrigin.y);
+		sf::Vector2f branchPos(m_pos.x, GetRandom(treeSize.height * -1.0f, -150.0f));
+		flip = GetRandom(0, 1) ? false : true;
 		m_Branches[i]->Move(120.0f);
 		if (m_Branches[i]->IsDestroyed())
 		{
@@ -77,7 +78,6 @@ bool Tree::CutOff()
 			m_Branches[i] = nullptr;
 			m_Branches[i] = new Branch(branchOrigin, branchPos, flip);
 			System::AttachLayer(m_Branches[i]);
-			flip = (flip) ? false : true;
 		}
 	}
 

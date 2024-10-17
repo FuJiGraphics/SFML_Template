@@ -33,12 +33,12 @@ void Player::OnEvent(fz::Event& event)
 	if (ev.type == ev.KeyPressed && Keyboard::isKeyPressed(Keyboard::Left))
 	{
 		Move(Direction::Left);
-		event.use();
+		// event.use();
 	}
 	if (ev.type == ev.KeyPressed && Keyboard::isKeyPressed(Keyboard::Right))
 	{
 		Move(Direction::Right);
-		event.use();
+		// event.use();
 	}
 }
 
