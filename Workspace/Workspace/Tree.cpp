@@ -1,4 +1,5 @@
 #include "Tree.h"
+#include "Player.h"
 
 using namespace fz;
 using namespace sf;
@@ -44,6 +45,9 @@ void Tree::OnDraw(sf::RenderWindow& device)
 
 void Tree::OnEvent(fz::Event& event)
 {
+	if (!AlivePlayer())
+		return;
+
 	sf::Event& ev = event.get();
 	if (ev.type == ev.KeyPressed && Keyboard::isKeyPressed(Keyboard::Left))
 	{

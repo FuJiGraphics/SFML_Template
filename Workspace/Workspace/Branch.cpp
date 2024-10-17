@@ -1,4 +1,5 @@
 #include "Branch.h"
+#include "Player.h"
 
 using namespace fz;
 
@@ -34,11 +35,17 @@ void Branch::OnAttach()
 
 void Branch::OnDraw(sf::RenderWindow& device)
 {
+	if (m_Destroyed)
+		return;
+	
 	device.draw(m_branch);
 }
 
 void Branch::OnUpdate(float dt)
 {
+	if (m_Destroyed)
+		return;
+
 	this->SetCollider(m_pos.x, m_pos.y, m_width, m_height);
 }
 
@@ -47,7 +54,10 @@ void Branch::OnCollide(Layer* pLayer, const std::string& className)
 	if (this->GetName() == className)
 		return;
 
-	std::cout << "충돌 발생! = " << className << std::endl;
+	if (className == "Player")
+	{
+		this->Kill(pLayer, className);
+	}
 }
 
 std::string Branch::GetName() const
@@ -71,4 +81,18 @@ void Branch::Move(float d)
 bool Branch::IsDestroyed()
 {
 	return (m_Destroyed);
+}
+
+void Branch::Destroy(bool enabled)
+{
+	m_Destroyed = enabled;
+}
+
+void Branch::Kill(Layer* player, const std::string& className)
+{
+	if (className == "Player")
+	{
+		dynamic_cast<Player*>(player)->Dead(true);
+		this->Destroy(true);
+	}
 }

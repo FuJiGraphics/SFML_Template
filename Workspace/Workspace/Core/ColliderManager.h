@@ -29,6 +29,5 @@ namespace fz {
 		std::vector<Collider**>		m_ColArray;
 		static ColliderManager*		s_instance;
 	};
-	
 
-}
+} // namespace fz

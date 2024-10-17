@@ -1,11 +1,8 @@
-
-#define new new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 
 #include "System.h"
 #include "App.h"
-
-
 
 using namespace fz;
 
@@ -21,7 +18,7 @@ void Process()
 int main(void)
 {
 	Process();
-
+	
 	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
 	_CrtDumpMemoryLeaks();
 

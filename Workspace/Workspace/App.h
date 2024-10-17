@@ -19,5 +19,7 @@ enum class Direction
 // Dynamic Attach List
 void Runtime(fz::System& system);
 
+bool AlivePlayer();
+
 // globals
 static int g_score = 0;

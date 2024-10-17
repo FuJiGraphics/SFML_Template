@@ -95,9 +95,14 @@ namespace fz {
         }
     }
 
-    void Layer::SetCollider(int x, int y, int rect, int right)
+    void Layer::SetCollider(int x, int y, int width, int height)
     {
-        m_body->Set(x, y, rect, right);
+        m_body->Set(x, y, x + width, y + height);
+    }
+
+    void Layer::SetColliderDisplayMode(bool enabled)
+    {
+        m_body->SetDisplay(enabled);
     }
 
 } // namespace fz

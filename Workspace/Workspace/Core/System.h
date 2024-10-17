@@ -17,6 +17,8 @@ namespace fz {
 		static void			AttachOverlay(Layer* pOverlay);
 		static void			DetachLayer(Layer* ppLayer);
 		static void			DetachOverlay(Layer* ppOverlay);
+		static Layer*		FindLayer(const std::string& className);
+		static void			ExitProgram();
 
 		void				CreateWindow(int width, int height, const char* title);	// 윈도우를 생성한다.
 		void				Run();
@@ -36,6 +38,7 @@ namespace fz {
 		int				m_width;
 		int				m_height;
 		bool			m_isPause;
+		bool			m_isPlaying;
 		static System*	s_system;
 	};
 

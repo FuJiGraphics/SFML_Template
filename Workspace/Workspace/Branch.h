@@ -15,6 +15,8 @@ public:
 
 	void			Move(float d);
 	bool			IsDestroyed();
+	void			Destroy(bool enabled);
+	void			Kill(Layer* player, const std::string& className);
 
 private:
 	sf::Sprite		m_branch;

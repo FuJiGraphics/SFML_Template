@@ -27,6 +27,7 @@ namespace fz {
 		bool					IsActivatedCollider() const;
 		void					ActivateCollider(bool flags, const std::string& className);
 		void					SetCollider(int x, int y, int rect, int right);
+		void					SetColliderDisplayMode(bool enabled);
 
 		// ±‚≈∏
 		static unsigned int		GetCount();

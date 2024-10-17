@@ -21,3 +21,15 @@ void Runtime(fz::System& system)
 	system.AttachLayer(new Bee);
 	system.AttachLayer(new Bee);
 }
+
+bool AlivePlayer()
+{
+	bool result = false;
+	fz::Layer* target = fz::System::FindLayer("Player");
+	Player* player = dynamic_cast<Player*>(target);
+	if (player != nullptr)
+	{
+		result = player->IsAlive();
+	}
+	return (result);
+}

@@ -20,6 +20,7 @@ public:
 	std::string		GetName() const override;
 
 	void			Move(Direction dir);
+	void			Dead(bool enabled);
 	bool			IsAlive();
 
 private:

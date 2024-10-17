@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Branch.h"
 
 using namespace fz;
 using namespace sf;
@@ -26,6 +27,7 @@ void Player::OnAttach()
 	// 충돌 기능 활성화
 	this->ActivateCollider(true, this->GetName());
 	this->SetCollider(m_pos.x, m_pos.y, m_width, m_height);
+	this->SetColliderDisplayMode(true);
 }
 
 void Player::OnDraw(sf::RenderWindow& device)
@@ -35,6 +37,9 @@ void Player::OnDraw(sf::RenderWindow& device)
 
 void Player::OnEvent(fz::Event& event)
 {
+	if (!m_isAlive)
+		return;
+
 	sf::Event& ev = event.get();
 	if (ev.type == ev.KeyPressed && Keyboard::isKeyPressed(Keyboard::Left))
 	{
@@ -50,12 +55,23 @@ void Player::OnEvent(fz::Event& event)
 
 void Player::OnUpdate(float dt)
 {
+	if (!m_isAlive)
+		return;
+
 	this->SetCollider(m_pos.x, m_pos.y, m_width, m_height);
 }
 
 void Player::OnCollide(Layer* pLayer, const std::string& className)
 {
-	
+	if (className == "Branch")
+	{
+		Branch* target = dynamic_cast<Branch*>(pLayer);
+		if (target)
+		{
+			target->Destroy(true);
+			this->Dead(true);
+		}
+	}
 }
 
 std::string Player::GetName() const
@@ -65,6 +81,9 @@ std::string Player::GetName() const
 
 void Player::Move(Direction dir)
 {
+	if (!m_isAlive)
+		return;
+
 	System& system = System::GetInstance();
 	if (dir == Direction::Left)
 	{
@@ -78,6 +97,14 @@ void Player::Move(Direction dir)
 		m_pos.x = system.GetWidth() * 0.5f + 50.0f;
 		m_player.setPosition(m_pos);
 	}
+}
+
+void Player::Dead(bool enabled)
+{
+	System& system = System::GetInstance();
+	auto& tex = TextureMap::GetTexture("res/graphics/rip.png");
+	m_player.setTexture(tex);
+	m_isAlive = false;
 }
 
 bool Player::IsAlive()

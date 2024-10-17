@@ -53,6 +53,27 @@ namespace fz {
 		ppOverlay->OnDetach();
 	}
 
+	Layer* System::FindLayer(const std::string& className)
+	{
+		System& system = System::GetInstance();
+		Layer* target = nullptr;
+		for (auto layer : *system.m_layerArray)
+		{
+			if (className == layer->GetName())
+			{
+				target = layer;
+				break;
+			}
+		}
+		return (target);
+	}
+
+	void System::ExitProgram()
+	{
+		System& system = System::GetInstance();
+		system.m_isPlaying = false;
+	}
+
 	void System::CreateWindow(int width, int height, const char* title)
 	{
 		if (m_window != nullptr)
@@ -67,7 +88,7 @@ namespace fz {
 	void System::Run()
 	{
 		sf::Clock clock;
-		while (m_window->IsOpen())
+		while (m_isPlaying && m_window->IsOpen())
 		{
 			EventQueue eventQueue;
 			static float timeScale = 1.0f;
@@ -133,6 +154,14 @@ namespace fz {
 			// 모든 오브젝트 그리기
 			auto& device = m_window->GetHandle();
 			device.clear();
+			for (auto collider : colManager)
+			{
+				if ((*collider)->IsDisplay())
+				{
+					auto& rect = (*collider)->GetBox();
+					device.draw(rect);
+				}
+			}
 			for (auto layer : (*m_layerArray))
 			{
 				layer->OnDraw(device);
@@ -166,6 +195,7 @@ namespace fz {
 		, m_width(0)
 		, m_height(0)
 		, m_isPause(false)
+		, m_isPlaying(true)
 	{
 		m_layerArray = new LayerArray();
 	}

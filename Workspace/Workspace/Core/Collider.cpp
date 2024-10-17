@@ -4,6 +4,7 @@ namespace fz {
 
 	Collider::Collider()
 		: m_isActivate(false)
+		, m_IsDisplay(false)
 		, m_className("")
 		, m_ownerLayer(nullptr)
 		, m_rect({0, 0, 0, 0})
@@ -33,6 +34,27 @@ namespace fz {
 		m_ownerLayer = layer;
 	}
 
+	void Collider::SetDisplay(bool enabled)
+	{
+		m_IsDisplay = enabled;
+		if (m_IsDisplay)
+		{
+			m_Box.setPosition((float)m_rect.x, (float)m_rect.y);
+			m_Box.setSize({(float)(m_rect.w - m_rect.x), (float)(m_rect.h - m_rect.y)});
+			m_Box.setFillColor(sf::Color::Blue);
+		}
+	}
+
+	bool Collider::IsDisplay() const
+	{
+		return (m_IsDisplay);
+	}
+
+	sf::RectangleShape& Collider::GetBox()
+	{
+		return (m_Box);
+	}
+
 	bool Collider::IsActivated()
 	{
 		return (m_isActivate);
@@ -40,20 +62,13 @@ namespace fz {
 
 	bool Collider::IsCollided(const Collider& other)
 	{
-		if (this == &other)
+		if (this == &other || m_className == other.m_className)
 			return (false);
+
 		const Rect& srcRec = other.Get();
-		int srcX = srcRec.x;
-		int srcY = srcRec.y;
-		int srcW = srcRec.x + srcRec.w;
-		int srcH = srcRec.y + srcRec.h;
-		int dstX = m_rect.x;
-		int dstY = m_rect.y;
-		int dstW = dstX + m_rect.w;
-		int dstH = dstY + m_rect.h;
-		if (dstW < srcX || dstX > srcW)
+		if (m_rect.w < srcRec.x || m_rect.x > srcRec.w)
 			return (false);
-		if (dstH < srcY || dstY > srcH)
+		if (m_rect.h < srcRec.y || m_rect.y > srcRec.h)
 			return (false);
 		if (m_ownerLayer)
 			m_ownerLayer->OnCollide(other.m_ownerLayer, other.m_ownerLayer->GetName());
