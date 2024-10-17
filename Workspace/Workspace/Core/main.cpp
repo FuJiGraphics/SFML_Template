@@ -1,6 +1,11 @@
+
+#define new new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#include <crtdbg.h>
+
 #include "System.h"
 #include "App.h"
-#include <crtdbg.h>
+
+
 
 using namespace fz;
 

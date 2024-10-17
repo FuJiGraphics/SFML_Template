@@ -63,7 +63,7 @@ void Cloud::ResetPos()
 void Cloud::Move(float dt, Direction dir, float speed)
 {
 	static float f = 0.0f;
-	f = (f < 6.3f) ? f + (0.003f) : 0.0f;
+	f = (f < 6.3f) ? f + (dt) : 0.0f;
 	switch (dir)
 	{
 		case Direction::Left:

@@ -18,14 +18,9 @@ namespace fz {
         s_numOfLayers--;
         if (m_body)
         {
-            auto& manager = GetColliderManager();
-            // TODO: Manager에서 제거
-            int target = ColliderFind(m_body);
-            if (target != -1)
-                manager.erase(manager.begin() + target);
+            auto& colManager = ColliderManager::GetInstance();
             m_body->Activate(false, "", nullptr);
-            delete m_body;
-            m_body = nullptr;
+            colManager.Detach(&m_body);
         }
     }
 
@@ -87,29 +82,16 @@ namespace fz {
         if (this->IsActivatedCollider())
             return;
 
-        auto& manager = GetColliderManager();
+        auto& colManager = ColliderManager::GetInstance();
         if (flags)
         {
-            if (m_body == nullptr)
-                m_body = new Collider();
+            colManager.Attach(&m_body);
             m_body->Activate(flags, className, this);
-            // TODO: Collider Manager에 등록
-            // ...
-            manager.push_back(m_body);
         }
         else
         {
-            // TODO: Collider Manager에 해제
-            // ...
-            if (m_body)
-            {
-                int target = ColliderFind(m_body);
-                if (target != -1)
-                    manager.erase(manager.begin() + target);
-                m_body->Activate(flags, "", nullptr);
-                delete m_body;
-                m_body = nullptr;
-            }
+            m_body->Activate(flags, "", nullptr);
+            colManager.Detach(&m_body);
         }
     }
 

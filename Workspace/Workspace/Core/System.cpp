@@ -121,12 +121,12 @@ namespace fz {
 			m_layerArray->WorkingGarbage();
 
 			// 충돌 체크
-			auto& manager = GetColliderManager();
-			for (auto collider1 : manager)
+			auto& colManager = ColliderManager::GetInstance();
+			for (auto collider1 : colManager)
 			{
-				for (auto collider2 : manager)
+				for (auto collider2 : colManager)
 				{
-					collider1->IsCollided(*collider2);
+					(*collider1)->IsCollided(**collider2);
 				}
 			}
 

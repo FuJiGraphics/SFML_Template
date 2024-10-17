@@ -60,7 +60,7 @@ void Bee::ResetPos()
 void Bee::Move(float dt, Direction dir, float speed)
 {
 	static float f = 0.0f;
-	f = (f < 6.3f) ? f + (0.006f) : 0.0f;
+	f = (f < 6.3f) ? f + (dt) : 0.0f;
 	switch (dir)
 	{
 	case Direction::Left:
