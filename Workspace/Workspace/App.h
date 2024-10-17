@@ -5,6 +5,7 @@
 #include "Core/System.h"
 #include "Core/Layer.h"
 #include "Core/TextureMap.h"
+#include "Core/Collider.h"
 #include "Utility/Math.h"
 
 // enums

@@ -29,6 +29,7 @@ namespace fz {
 		const_iter	end() const;
 
 	private:
+		// TODO: 20241017) 구조 리팩토링
 		std::vector<Layer*>		m_LayerArray;
 		std::vector<Layer*>		m_AddLayerBuffer;
 		std::vector<Layer*>		m_AddOverlayBuffer;

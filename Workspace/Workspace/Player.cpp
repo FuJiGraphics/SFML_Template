@@ -17,9 +17,15 @@ void Player::OnAttach()
 	auto& tex = TextureMap::GetTexture("res/graphics/player.png");
 	m_player.setTexture(tex);
 	m_player.setOrigin(-150.0f, 0.0f);
+	m_width = m_player.getLocalBounds().width;
+	m_height = m_player.getLocalBounds().height;
 	m_pos.x = system.GetWidth() * 0.5f + 50.0f;
-	m_pos.y = system.GetHeight() - 400.0f;
+	m_pos.y = system.GetHeight() - 380.0f;
 	m_player.setPosition(m_pos);
+	m_isAlive = true;
+	// 충돌 기능 활성화
+	this->ActivateCollider(true, this->GetName());
+	this->SetCollider(m_pos.x, m_pos.y, m_width, m_height);
 }
 
 void Player::OnDraw(sf::RenderWindow& device)
@@ -42,6 +48,21 @@ void Player::OnEvent(fz::Event& event)
 	}
 }
 
+void Player::OnUpdate(float dt)
+{
+	this->SetCollider(m_pos.x, m_pos.y, m_width, m_height);
+}
+
+void Player::OnCollide(Layer* pLayer, const std::string& className)
+{
+	
+}
+
+std::string Player::GetName() const
+{
+	return ("Player");
+}
+
 void Player::Move(Direction dir)
 {
 	System& system = System::GetInstance();
@@ -57,4 +78,9 @@ void Player::Move(Direction dir)
 		m_pos.x = system.GetWidth() * 0.5f + 50.0f;
 		m_player.setPosition(m_pos);
 	}
+}
+
+bool Player::IsAlive()
+{
+	return (m_isAlive);
 }

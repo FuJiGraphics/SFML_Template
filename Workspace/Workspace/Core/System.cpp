@@ -1,6 +1,7 @@
 #include "System.h"
 #include "Window.h"
 #include "LayerArray.h"
+#include "ColliderManager.h"
 
 namespace fz {
 
@@ -95,14 +96,17 @@ namespace fz {
 					}
 				}
 
-				for (auto layer : (*m_layerArray))
+				if (!m_isPause)
 				{
-					if (!event.empty())
-						layer->OnEvent(event);
-					else
-						break;
+					for (auto layer : (*m_layerArray))
+					{
+						if (!event.empty())
+							layer->OnEvent(event);
+						else
+							break;
+					}
 				}
-			}
+			} // for (auto& event : eventQueue)
 
 			// Layer 업데이트
 			if (!m_isPause)
@@ -115,7 +119,18 @@ namespace fz {
 
 			// 삭제 요청된 레이어 정리
 			m_layerArray->WorkingGarbage();
-			
+
+			// 충돌 체크
+			auto& manager = GetColliderManager();
+			for (auto collider1 : manager)
+			{
+				for (auto collider2 : manager)
+				{
+					collider1->IsCollided(*collider2);
+				}
+			}
+
+			// 모든 오브젝트 그리기
 			auto& device = m_window->GetHandle();
 			device.clear();
 			for (auto layer : (*m_layerArray))

@@ -69,7 +69,7 @@ bool Tree::CutOff()
 	for (int i = 0; i < branchSize; ++i)
 	{
 		sf::Vector2f branchOrigin(treeOrigin.x * -1.0f, treeOrigin.y);
-		sf::Vector2f branchPos(m_pos.x, GetRandom(treeSize.height * -1.0f, -150.0f));
+		sf::Vector2f branchPos(m_pos.x, (float)(120 * GetRandom(1, 9) * -1));
 		flip = GetRandom(0, 1) ? false : true;
 		m_Branches[i]->Move(120.0f);
 		if (m_Branches[i]->IsDestroyed())
