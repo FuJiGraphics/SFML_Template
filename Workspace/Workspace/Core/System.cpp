@@ -154,14 +154,6 @@ namespace fz {
 			// 모든 오브젝트 그리기
 			auto& device = m_window->GetHandle();
 			device.clear();
-			for (auto collider : colManager)
-			{
-				if ((*collider)->IsDisplay())
-				{
-					auto& rect = (*collider)->GetBox();
-					device.draw(rect);
-				}
-			}
 			for (auto layer : (*m_layerArray))
 			{
 				layer->OnDraw(device);
@@ -169,6 +161,14 @@ namespace fz {
 			for (auto layer : (*m_layerArray))
 			{
 				layer->OnUI(device);
+			}
+			for (auto collider : colManager)
+			{
+				if ((*collider)->IsDisplay())
+				{
+					auto& rect = (*collider)->GetBox();
+					device.draw(rect);
+				}
 			}
 			device.display();
 		}

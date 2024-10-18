@@ -26,7 +26,7 @@ namespace fz {
 		// 충돌 시스템
 		bool					IsActivatedCollider() const;
 		void					ActivateCollider(bool flags, const std::string& className);
-		void					SetCollider(int x, int y, int rect, int right);
+		void					SetCollider(const sf::Vector2f& origin, const sf::FloatRect& rect, const sf::Vector2f& scale = {1.0f, 1.0f});
 		void					SetColliderDisplayMode(bool enabled);
 
 		// 기타

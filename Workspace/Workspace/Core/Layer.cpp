@@ -95,9 +95,9 @@ namespace fz {
         }
     }
 
-    void Layer::SetCollider(int x, int y, int width, int height)
+    void Layer::SetCollider(const sf::Vector2f& origin, const sf::FloatRect& rect, const sf::Vector2f& scale)
     {
-        m_body->Set(x, y, x + width, y + height);
+        m_body->Set(origin, rect, scale);
     }
 
     void Layer::SetColliderDisplayMode(bool enabled)

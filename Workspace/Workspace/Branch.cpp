@@ -30,7 +30,8 @@ void Branch::OnAttach()
 	m_width = m_branch.getLocalBounds().width;
 	m_height = m_branch.getLocalBounds().height;
 	this->ActivateCollider(true, this->GetName());
-	this->SetCollider(m_pos.x, m_pos.y, m_width, m_height);
+	this->SetCollider(m_branch.getOrigin(), m_branch.getGlobalBounds());
+	this->SetColliderDisplayMode(true);
 }
 
 void Branch::OnDraw(sf::RenderWindow& device)
@@ -46,7 +47,14 @@ void Branch::OnUpdate(float dt)
 	if (m_Destroyed)
 		return;
 
-	this->SetCollider(m_pos.x, m_pos.y, m_width, m_height);
+	auto& origin = m_branch.getOrigin();
+	auto& pos = m_branch.getGlobalBounds();
+	sf::FloatRect tRec;
+	tRec.left = pos.left + origin.x;
+	tRec.top = pos.top + origin.y;
+	tRec.width = pos.width;
+	tRec.height = pos.height;
+	this->SetCollider(m_branch.getOrigin(), tRec);
 }
 
 void Branch::OnCollide(Layer* pLayer, const std::string& className)

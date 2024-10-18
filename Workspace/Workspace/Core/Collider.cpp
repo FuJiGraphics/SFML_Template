@@ -9,7 +9,6 @@ namespace fz {
 		, m_ownerLayer(nullptr)
 		, m_rect({0, 0, 0, 0})
 	{
-		// Empty
 	}
 
 	Collider::~Collider()
@@ -17,9 +16,20 @@ namespace fz {
 		// Empty
 	}
 
-	void Collider::Set(int x, int y, int width, int height)
+	void Collider::Set(const sf::Vector2f& origin, const sf::FloatRect& rect, const sf::Vector2f& scale)
 	{
-		m_rect = { x, y, width, height };
+		m_Box.setOrigin(origin);
+		m_Box.setPosition({ rect.left, rect.top });
+		m_Box.setSize({ rect.width, rect.height });
+		m_Box.setScale(scale);
+		m_Box.setFillColor(sf::Color::Transparent);
+		m_Box.setOutlineColor(sf::Color::White);
+		m_Box.setOutlineThickness(3.0f);
+		auto& globalPos = m_Box.getGlobalBounds();
+		m_rect.x = globalPos.left;
+		m_rect.y = globalPos.top;
+		m_rect.w = m_rect.x + globalPos.width;
+		m_rect.h = m_rect.y + globalPos.height;
 	}
 
 	const Rect& Collider::Get() const
@@ -37,12 +47,11 @@ namespace fz {
 	void Collider::SetDisplay(bool enabled)
 	{
 		m_IsDisplay = enabled;
-		if (m_IsDisplay)
-		{
-			m_Box.setPosition((float)m_rect.x, (float)m_rect.y);
-			m_Box.setSize({(float)(m_rect.w - m_rect.x), (float)(m_rect.h - m_rect.y)});
-			m_Box.setFillColor(sf::Color::Blue);
-		}
+	}
+
+	void Collider::SetOutlineColor(const sf::Color& color)
+	{
+		m_Box.setOutlineColor(color);
 	}
 
 	bool Collider::IsDisplay() const
@@ -60,7 +69,7 @@ namespace fz {
 		return (m_isActivate);
 	}
 
-	bool Collider::IsCollided(const Collider& other)
+	bool Collider::IsCollided(Collider& other)
 	{
 		if (this == &other || m_className == other.m_className)
 			return (false);
@@ -70,8 +79,12 @@ namespace fz {
 			return (false);
 		if (m_rect.h < srcRec.y || m_rect.y > srcRec.h)
 			return (false);
+
 		if (m_ownerLayer)
 			m_ownerLayer->OnCollide(other.m_ownerLayer, other.m_ownerLayer->GetName());
+
+		other.SetOutlineColor(sf::Color::Red);
+		this->SetOutlineColor(sf::Color::Red);
 		return (true);
 	}
 

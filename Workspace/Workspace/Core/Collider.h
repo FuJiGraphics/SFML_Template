@@ -16,14 +16,15 @@ namespace fz {
 		Collider();
 		virtual ~Collider();
 
-		void				Set(int x, int y, int width, int height);
+		void				Set(const sf::Vector2f& origin, const sf::FloatRect& rect, const sf::Vector2f& scale);
 		const Rect&			Get() const;
 		void				Activate(bool flags, const std::string& className, Layer* layer);
 		void				SetDisplay(bool enabled);
+		void				SetOutlineColor(const sf::Color& color);
 		bool				IsDisplay() const;
 		sf::RectangleShape&	GetBox();
 		bool				IsActivated();
-		bool				IsCollided(const Collider& other);
+		bool				IsCollided(Collider& other);
 		Layer*				GetOwner();
 
 	private:
