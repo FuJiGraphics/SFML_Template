@@ -2,27 +2,22 @@
 #include "Window.h"
 #include "LayerArray.h"
 #include "ColliderManager.h"
+#include "Player.h"
 
 namespace fz {
 
-	System* System::s_system = nullptr;
+	float	System::s_timeScale = 1.0f;
 
 	System& System::GetInstance()
 	{
-		if (s_system == nullptr)
-		{
-			s_system = new System();
-		}
-		return (*s_system);
+		static System s_system;
+		return (s_system);
 	}
 
 	void System::Delete()
 	{
-		if (s_system != nullptr)
-		{
-			delete s_system;
-			s_system = nullptr;
-		}
+		System& system = System::GetInstance();
+		system.Reset();
 	}
 
 	void System::AttachLayer(Layer* pLayer)
@@ -72,6 +67,39 @@ namespace fz {
 	{
 		System& system = System::GetInstance();
 		system.m_isPlaying = false;
+		system.m_isReset = false;
+	}
+
+	void System::SetPause(bool enabled)
+	{
+		System& system = System::GetInstance();
+		system.m_isPause = enabled;
+		s_timeScale = (enabled) ? 0.0f : 1.0f;
+	}
+
+	void System::SetReset(bool enabled)
+	{
+		System& system = System::GetInstance();
+		system.m_isPlaying = (enabled) ? false : true;
+		system.m_isReset = enabled;
+	}
+
+	bool System::GetResetStatus()
+	{
+		System& system = System::GetInstance();
+		return (system.m_isReset);
+	}
+
+	bool System::IsPaused()
+	{
+		System& system = System::GetInstance();
+		return (system.m_isPause);
+	}
+
+	bool System::IsFirstEvent()
+	{
+		System& system = System::GetInstance();
+		return (system.m_isFirstStart);
 	}
 
 	void System::CreateWindow(int width, int height, const char* title)
@@ -91,8 +119,7 @@ namespace fz {
 		while (m_isPlaying && m_window->IsOpen())
 		{
 			EventQueue eventQueue;
-			static float timeScale = 1.0f;
- 			float dt = clock.restart().asSeconds() * timeScale;
+ 			float dt = clock.restart().asSeconds() * s_timeScale;
 			// 레이어 추가 요청 처리
 			m_layerArray->WorkingInsertLayers();
 
@@ -107,12 +134,28 @@ namespace fz {
 					// 일시 정지
 					case sf::Event::KeyPressed:
 					{
+						static bool prevPauseFlag = true;
 						switch (event.get().key.code)
 						{
-						case sf::Keyboard::Return:
-							m_isPause = (m_isPause == false) ? true : false;
-							timeScale = (timeScale == 0.0f) ? 1.0f : 0.0f;
-							break;
+							case sf::Keyboard::Escape:
+								prevPauseFlag = (prevPauseFlag) ? false : true;
+								this->SetPause(prevPauseFlag);
+								break;
+							case sf::Keyboard::Return:
+							{
+								if (m_isFirstStart)
+									m_isFirstStart = false;
+								else
+								{
+									Layer* target = System::FindLayer("Player");
+									Player* p = dynamic_cast<Player*>(target);
+									if (p != nullptr)
+									{
+										if (!p->IsAlive())
+											this->SetReset(true);
+									}
+								}
+							} break;
 						}
 					}
 				}
@@ -174,6 +217,20 @@ namespace fz {
 		}
 	}
 
+	void System::Reset()
+	{
+		if (!m_isReset)
+			return;
+
+		s_timeScale = 1.0f;
+		m_isPlaying = true;
+		m_isPause = false;
+		m_isReset = false;
+		m_isFirstStart = true;
+		this->ReleaseLayerArray();
+		this->CreateLayerArray();
+	}
+
 	int System::GetWidth()
 	{
 		return (m_width);
@@ -194,13 +251,21 @@ namespace fz {
 		, m_layerArray(nullptr)
 		, m_width(0)
 		, m_height(0)
-		, m_isPause(false)
 		, m_isPlaying(true)
+		, m_isPause(false)
+		, m_isReset(false)
+		, m_isFirstStart(true)
 	{
-		m_layerArray = new LayerArray();
+		this->CreateLayerArray();
 	}
 
 	System::~System()
+	{
+		ReleaseWindow();
+		ReleaseLayerArray();
+	}
+
+	void System::ReleaseWindow()
 	{
 		if (m_window != nullptr)
 		{
@@ -208,6 +273,18 @@ namespace fz {
 			delete m_window;
 			m_window = nullptr;
 		}
+	}
+
+	void System::CreateLayerArray()
+	{
+		if (m_layerArray != nullptr)
+			return;
+		
+		m_layerArray = new LayerArray();
+	}
+
+	void System::ReleaseLayerArray()
+	{
 		if (m_layerArray != nullptr)
 		{
 			delete m_layerArray;

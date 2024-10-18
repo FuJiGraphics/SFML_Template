@@ -1,4 +1,5 @@
 #include "UI.h"
+#include "Player.h"
 
 using namespace sf;
 
@@ -22,13 +23,29 @@ void UI::OnAttach()
 	m_scoreText1.setFillColor(sf::Color::White);
 	m_scoreText1.setPosition(10.0f, 10.0f);
 
-	m_scoreText2.setFont(m_font);
-	m_scoreText2.setString("PRESS ENTER TO START!");
-	m_scoreText2.setCharacterSize(70);
-	m_scoreText2.setFillColor(sf::Color::White);
-	auto& localRect = m_scoreText2.getLocalBounds();
-	m_scoreText2.setOrigin(localRect.width * 0.5f, localRect.height * 0.5f);
-	m_scoreText2.setPosition(system.GetWidth() * 0.5f, system.GetHeight() * 0.5f);
+	m_state.setFont(m_font);
+	m_state.setString("PAUSE!");
+	m_state.setCharacterSize(70);
+	m_state.setFillColor(sf::Color::White);
+	auto& localRectS = m_state.getLocalBounds();
+	m_state.setOrigin(localRectS.width * 0.5f, localRectS.height * 0.5f);
+	m_state.setPosition(system.GetWidth() * 0.5f, system.GetHeight() * 0.4f);
+
+	m_gameOver.setFont(m_font);
+	m_gameOver.setString("GAME OVER!");
+	m_gameOver.setCharacterSize(70);
+	m_gameOver.setFillColor(sf::Color::White);
+	auto& localRectO = m_gameOver.getLocalBounds();
+	m_gameOver.setOrigin(localRectO.width * 0.5f, localRectO.height * 0.5f);
+	m_gameOver.setPosition(system.GetWidth() * 0.5f, system.GetHeight() * 0.4f);
+
+	m_gameStart.setFont(m_font);
+	m_gameStart.setString("PRESS ENTER TO START!");
+	m_gameStart.setCharacterSize(70);
+	m_gameStart.setFillColor(sf::Color::White);
+	auto& localRectG = m_gameStart.getLocalBounds();
+	m_gameStart.setOrigin(localRectG.width * 0.5f, localRectG.height * 0.5f);
+	m_gameStart.setPosition(system.GetWidth() * 0.5f, system.GetHeight() * 0.4f);
 
 	// ≈∏¿” πŸ
 	float timeBarWidth = 400;
@@ -46,6 +63,9 @@ void UI::OnAttach()
 
 void UI::OnUpdate(float dt)
 {
+	if (fz::System::IsFirstEvent())
+		return;
+
 	m_scoreText1.setString("Score = " + std::to_string(g_score));
 
 	sf::Vector2f size = m_timeBar.getSize();
@@ -53,7 +73,13 @@ void UI::OnUpdate(float dt)
 	if (size.x < 0.0f)
 	{
 		size.x = 0.0f;
-		// Game Over;
+		Layer* target = fz::System::FindLayer("Player");
+		Player* p = dynamic_cast<Player*>(target);
+		if (p != nullptr)
+		{
+			p->Dead(true);
+			m_state.setString("Game Over");
+		}
 	}
 	m_timeBar.setSize(size);
 }
@@ -61,8 +87,38 @@ void UI::OnUpdate(float dt)
 void UI::OnUI(sf::RenderWindow& device)
 {
 	device.draw(m_scoreText1);
-	device.draw(m_scoreText2);
+	Layer* target = fz::System::FindLayer("Player");
+	Player* p = dynamic_cast<Player*>(target);
+	if (fz::System::IsFirstEvent())
+		device.draw(m_gameStart);
+	else if (p != nullptr && !p->IsAlive())
+		device.draw(m_gameOver);
+	else if (fz::System::IsPaused())
+		device.draw(m_state);
+
 	device.draw(m_timeBar);
+}
+
+std::string UI::GetName() const
+{
+	return ("UI");
+}
+
+void UI::SetGameOver(bool enabled)
+{
+	auto& system = fz::System::GetInstance();
+	float winWidth = system.GetWidth();
+	float winHeight = system.GetHeight();
+	if (enabled)
+	{
+		m_state.setString("Game Over");
+		m_state.setPosition(winWidth, winHeight);
+	}
+	else
+	{
+		m_state.setString("PRESS ENTER TO START!");
+		m_state.setPosition(winWidth * 0.5f, winHeight * 0.5f);
+	}
 }
 
 void UI::OnEvent(fz::Event& event)

@@ -21,7 +21,7 @@ namespace fz {
 		virtual void			OnDraw(sf::RenderWindow& device);
 		virtual void			OnUI(sf::RenderWindow& device);
 		virtual void			OnCollide(Layer* pLayer, const std::string& className);
-		virtual std::string		GetName() const;
+		virtual std::string		GetName() const = 0;
 
 		// 충돌 시스템
 		bool					IsActivatedCollider() const;

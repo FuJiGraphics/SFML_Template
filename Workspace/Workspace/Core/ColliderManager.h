@@ -19,7 +19,7 @@ namespace fz {
 		const_iter		begin() const;
 		const_iter		end() const;
 		
-		static ColliderManager&	GetInstance();
+		static ColliderManager&		GetInstance();
 
 	protected:
 		explicit ColliderManager();
@@ -27,7 +27,6 @@ namespace fz {
 
 	private:
 		std::vector<Collider**>		m_ColArray;
-		static ColliderManager*		s_instance;
 	};
 
 } // namespace fz

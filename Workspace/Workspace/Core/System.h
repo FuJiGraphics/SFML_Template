@@ -19,9 +19,15 @@ namespace fz {
 		static void			DetachOverlay(Layer* ppOverlay);
 		static Layer*		FindLayer(const std::string& className);
 		static void			ExitProgram();
+		static void			SetPause(bool enabled);
+		static void			SetReset(bool enabled);
+		static bool			GetResetStatus();
+		static bool			IsPaused();
+		static bool			IsFirstEvent();
 
 		void				CreateWindow(int width, int height, const char* title);	// 윈도우를 생성한다.
 		void				Run();
+		void				Reset();
 		int					GetWidth();
 		int					GetHeight();
 
@@ -32,6 +38,10 @@ namespace fz {
 		System();
 		virtual ~System();
 
+		void				ReleaseWindow();
+		void				CreateLayerArray();
+		void				ReleaseLayerArray();
+
 	private:
 		Window*			m_window;
 		LayerArray*		m_layerArray;
@@ -39,7 +49,9 @@ namespace fz {
 		int				m_height;
 		bool			m_isPause;
 		bool			m_isPlaying;
-		static System*	s_system;
+		bool			m_isReset;
+		bool			m_isFirstStart;
+		static float	s_timeScale;
 	};
 
 } // namespace fz

@@ -2,8 +2,6 @@
 
 namespace fz {
 
-	ColliderManager* ColliderManager::s_instance = nullptr;
-
 	void ColliderManager::Attach(Collider** collider)
 	{
 		if (this->Find(collider) == m_ColArray.end())
@@ -55,11 +53,8 @@ namespace fz {
 
 	ColliderManager& ColliderManager::GetInstance()
 	{
-		if (s_instance == nullptr)
-		{
-			s_instance = new ColliderManager;
-		}
-		return (*s_instance);
+		static ColliderManager s_instance;
+		return (s_instance);
 	}
 
 	ColliderManager::ColliderManager()

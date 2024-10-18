@@ -15,6 +15,7 @@ public:
 	void	ResetPos();
 	void	Move(float dt, Direction dir, float speed);
 	bool	CollideWall();
+	std::string		GetName() const override;
 
 private:
 	sf::Sprite		m_bee;

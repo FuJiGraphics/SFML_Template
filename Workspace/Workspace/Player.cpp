@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Branch.h"
+#include "UI.h"
 
 using namespace fz;
 using namespace sf;
@@ -29,16 +30,21 @@ void Player::OnAttach()
 	// 충돌 기능 활성화
 	this->ActivateCollider(true, this->GetName());
 	this->SetCollider(m_origin, m_player.getLocalBounds());
-	this->SetColliderDisplayMode(true);
+	this->SetColliderDisplayMode(false);
 }
 
 void Player::OnDraw(sf::RenderWindow& device)
 {
+	if (System::IsFirstEvent())
+		return;
+
 	device.draw(m_player);
 }
 
 void Player::OnEvent(fz::Event& event)
 {
+	if (System::IsFirstEvent())
+		return;
 	if (!m_isAlive)
 		return;
 
@@ -59,17 +65,12 @@ void Player::OnEvent(fz::Event& event)
 
 void Player::OnUpdate(float dt)
 {
+	if (System::IsFirstEvent())
+		return;
 	if (!m_isAlive)
 		return;
-	
-	auto& origin = m_player.getOrigin();
-	auto& pos = m_player.getGlobalBounds();
-	sf::FloatRect tRec;
-	tRec.left = pos.left + origin.x;
-	tRec.top = pos.top + origin.y;
-	tRec.width = pos.width;
-	tRec.height = pos.height;
-	this->SetCollider(m_origin, tRec);
+	this->SetColliderDisplayMode(true);
+	this->SetCollider(m_player.getOrigin(), m_player.getGlobalBounds());
 }
 
 void Player::OnCollide(Layer* pLayer, const std::string& className)
@@ -116,6 +117,13 @@ void Player::Dead(bool enabled)
 	auto& tex = TextureMap::GetTexture("res/graphics/rip.png");
 	m_player.setTexture(tex);
 	m_isAlive = false;
+	System::SetPause(true);
+	Layer* target = System::FindLayer("UI");
+	UI* ui = dynamic_cast<UI*>(target);
+	if (ui != nullptr)
+	{
+		ui->SetGameOver(true);
+	}
 }
 
 bool Player::IsAlive()

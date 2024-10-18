@@ -1,5 +1,6 @@
 #include "Branch.h"
 #include "Player.h"
+#include "UI.h"
 
 using namespace fz;
 
@@ -30,6 +31,7 @@ void Branch::OnAttach()
 	m_width = m_branch.getLocalBounds().width;
 	m_height = m_branch.getLocalBounds().height;
 	this->ActivateCollider(true, this->GetName());
+
 	this->SetCollider(m_branch.getOrigin(), m_branch.getGlobalBounds());
 	this->SetColliderDisplayMode(true);
 }
@@ -44,17 +46,12 @@ void Branch::OnDraw(sf::RenderWindow& device)
 
 void Branch::OnUpdate(float dt)
 {
+	if (System::IsFirstEvent())
+		return;
 	if (m_Destroyed)
 		return;
 
-	auto& origin = m_branch.getOrigin();
-	auto& pos = m_branch.getGlobalBounds();
-	sf::FloatRect tRec;
-	tRec.left = pos.left + origin.x;
-	tRec.top = pos.top + origin.y;
-	tRec.width = pos.width;
-	tRec.height = pos.height;
-	this->SetCollider(m_branch.getOrigin(), tRec);
+	this->SetCollider(m_branch.getOrigin(), m_branch.getGlobalBounds());
 }
 
 void Branch::OnCollide(Layer* pLayer, const std::string& className)
@@ -65,6 +62,12 @@ void Branch::OnCollide(Layer* pLayer, const std::string& className)
 	if (className == "Player")
 	{
 		this->Kill(pLayer, className);
+		Layer* target = System::FindLayer("UI");
+		UI* ui = dynamic_cast<UI*>(target);
+		if (ui != nullptr)
+		{
+			ui->SetGameOver(true);
+		}
 	}
 }
 
@@ -80,7 +83,7 @@ void Branch::Move(float d)
 	m_branch.setPosition(m_pos);
 	
 	// ¶¥¿¡ ´êÀ» ½Ã ÆÄ±«
-	if (m_pos.y > 720.0f)
+	if (m_pos.y > 840.0f)
 	{
 		m_Destroyed = true;
 	}

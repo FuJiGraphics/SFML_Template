@@ -23,3 +23,8 @@ void Background::OnDraw(sf::RenderWindow& device)
 {
 	device.draw(m_background);
 }
+
+std::string Background::GetName() const
+{
+	return ("Background");
+}

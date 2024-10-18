@@ -12,6 +12,7 @@ public:
 	void	OnAttach() override;
 	void	OnDraw(sf::RenderWindow& device) override;
 	void	OnEvent(fz::Event& event) override;
+	std::string		GetName() const;
 
 	bool	CutOff();
 

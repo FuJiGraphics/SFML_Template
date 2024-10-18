@@ -100,4 +100,9 @@ bool Cloud::CollideWall()
 	return (result);
 }
 
+std::string Cloud::GetName() const
+{
+	return ("Cloud");
+}
+
 

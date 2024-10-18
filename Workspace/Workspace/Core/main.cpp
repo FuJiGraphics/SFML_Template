@@ -10,8 +10,13 @@ void Process()
 {
 	System& system = System::GetInstance();
 	system.CreateWindow(1920, 1080, "Game");
-	Runtime(system);
-	system.Run();
+
+	do {
+		system.Reset();
+		Runtime(system);
+		system.Run();
+	} while (system.GetResetStatus());
+
 	system.Delete();
 }
 

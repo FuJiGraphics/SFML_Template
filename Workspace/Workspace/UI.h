@@ -14,15 +14,20 @@ public:
 	UI();
 	~UI();
 	
-	void	OnAttach() override;
-	void	OnEvent(fz::Event& event) override;
-	void	OnUpdate(float dt) override;
-	void	OnUI(sf::RenderWindow& device) override;
+	void			OnAttach() override;
+	void			OnEvent(fz::Event& event) override;
+	void			OnUpdate(float dt) override;
+	void			OnUI(sf::RenderWindow& device) override;
+	std::string		GetName() const;
+
+	void			SetGameOver(bool enabled);
 
 private:
 	sf::Font			m_font;
 	sf::Text			m_scoreText1;
-	sf::Text			m_scoreText2;
+	sf::Text			m_gameStart;
+	sf::Text			m_gameOver;
+	sf::Text			m_state;
 	sf::RectangleShape	m_timeBar;
 	float				m_timeBarSpeed;
 };

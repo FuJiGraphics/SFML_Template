@@ -96,3 +96,8 @@ bool Bee::CollideWall()
 
 	return (result);
 }
+
+std::string Bee::GetName() const
+{
+	return ("Bee");
+}
