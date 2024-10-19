@@ -2,7 +2,6 @@
 #include "Player.h"
 
 using namespace fz;
-using namespace sf;
 
 Tree::Tree(int posX, int posY)
 	: m_pos((float)posX, (float)posY)
@@ -18,10 +17,11 @@ void Tree::OnAttach()
 	auto& system = System::GetInstance();
 
 	// 나무 생성
-	auto& tex = TextureMap::GetTexture("res/graphics/tree.png");
-	m_tree.setTexture(tex);
+	Texture::Load("res/graphics/tree.png");
+	auto& texture = Texture::Get("res/graphics/tree.png");
+	m_tree.setTexture(texture);
 	m_tree.setPosition(m_pos);
-	m_tree.setOrigin(tex.getSize().x * 0.5f, 0.0f);
+	m_tree.setOrigin(texture.getSize().x * 0.5f, 0.0f);
 
 	int numOfBranch = 6;
 	auto& treeSize = m_tree.getLocalBounds();
@@ -45,18 +45,16 @@ void Tree::OnDraw(sf::RenderWindow& device)
 
 void Tree::OnEvent(fz::Event& event)
 {
-	if (System::IsFirstEvent())
-		return;
-	if (!AlivePlayer())
+	if (System::IsPaused())
 		return;
 
 	sf::Event& ev = event.get();
-	if (ev.type == ev.KeyPressed && Keyboard::isKeyPressed(Keyboard::Left))
+	if (ev.type == ev.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		this->CutOff();
 		event.use();
 	}
-	if (ev.type == ev.KeyPressed && Keyboard::isKeyPressed(Keyboard::Right))
+	if (ev.type == ev.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		this->CutOff();
 		event.use();

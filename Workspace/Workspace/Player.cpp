@@ -3,7 +3,6 @@
 #include "UI.h"
 
 using namespace fz;
-using namespace sf;
 
 Player::Player()
 {
@@ -16,8 +15,9 @@ Player::~Player()
 void Player::OnAttach()
 {
 	System& system = System::GetInstance();
-	auto& tex = TextureMap::GetTexture("res/graphics/player.png");
-	m_player.setTexture(tex);
+	Texture::Load("res/graphics/player.png");
+	auto& texture = Texture::Get("res/graphics/player.png");
+	m_player.setTexture(texture);
 	m_player.setOrigin(-150.0f, 0.0f);
 	m_origin = m_player.getOrigin();
 	m_width = m_player.getLocalBounds().width;
@@ -35,40 +35,44 @@ void Player::OnAttach()
 
 void Player::OnDraw(sf::RenderWindow& device)
 {
-	if (System::IsFirstEvent())
-		return;
-
 	device.draw(m_player);
 }
 
 void Player::OnEvent(fz::Event& event)
 {
-	if (System::IsFirstEvent())
+	if (System::IsPaused())
 		return;
 	if (!m_isAlive)
 		return;
+	Layer* target = System::FindLayer("UI");
+	UI* u = dynamic_cast<UI*>(target);
 
 	sf::Event& ev = event.get();
-	if (ev.type == ev.KeyPressed && Keyboard::isKeyPressed(Keyboard::Left))
+	if (ev.type == ev.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		Move(Direction::Left);
 		m_flip = true;
+		if (u != nullptr)
+			u->RegainTimebar(100.0f);
 		// event.use();
 	}
-	if (ev.type == ev.KeyPressed && Keyboard::isKeyPressed(Keyboard::Right))
+	if (ev.type == ev.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		Move(Direction::Right);
 		m_flip = false;
+		if (u != nullptr)
+			u->RegainTimebar(30.0f);
 		// event.use();
 	}
 }
 
 void Player::OnUpdate(float dt)
 {
-	if (System::IsFirstEvent())
+	if (System::IsPaused())
 		return;
 	if (!m_isAlive)
 		return;
+
 	this->SetColliderDisplayMode(true);
 	this->SetCollider(m_player.getOrigin(), m_player.getGlobalBounds());
 }
@@ -93,9 +97,6 @@ std::string Player::GetName() const
 
 void Player::Move(Direction dir)
 {
-	if (!m_isAlive)
-		return;
-
 	System& system = System::GetInstance();
 	if (dir == Direction::Left)
 	{
@@ -114,16 +115,11 @@ void Player::Move(Direction dir)
 void Player::Dead(bool enabled)
 {
 	System& system = System::GetInstance();
-	auto& tex = TextureMap::GetTexture("res/graphics/rip.png");
-	m_player.setTexture(tex);
+	fz::Texture::Load("res/graphics/rip.png");
+	auto& texture = fz::Texture::Get("res/graphics/rip.png");
+	m_player.setTexture(texture);
 	m_isAlive = false;
 	System::SetPause(true);
-	Layer* target = System::FindLayer("UI");
-	UI* ui = dynamic_cast<UI*>(target);
-	if (ui != nullptr)
-	{
-		ui->SetGameOver(true);
-	}
 }
 
 bool Player::IsAlive()

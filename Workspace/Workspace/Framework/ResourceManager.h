@@ -17,8 +17,12 @@ namespace fz {
 		static bool		Load(const std::string& path);
 		static bool		Unload(const std::string& path);
 		static void		UnloadAll();
+		static T&		Get_Safety(const std::string& path);
 		static T&		Get(const std::string& path);
 	};
+
+	using Texture = ResourceManager<sf::Texture>;
+	using Font = ResourceManager<sf::Font>;
 
 } // namespace fz;
 

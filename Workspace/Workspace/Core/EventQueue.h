@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 #include "Event.h"
+#include "LayerArray.h"
 
 namespace fz {
 
@@ -12,7 +13,8 @@ namespace fz {
     public:
         explicit EventQueue();
         virtual ~EventQueue();
-
+        
+        void        DispatchTo(const LayerArray& layers);
         void        push(const sf::Event& event);
         bool        empty() const;
         int         size() const;

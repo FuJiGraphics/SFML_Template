@@ -13,6 +13,20 @@ namespace fz {
         // Empty
     }
 
+    void EventQueue::DispatchTo(const LayerArray& layers)
+    {
+        for (auto& event : m_eventQueue)
+        {
+            for (auto& layer : layers)
+            {
+                if (!event.empty())
+                    layer->OnEvent(event);
+                else
+                    break;
+            }
+        }
+    }
+
     void EventQueue::push(const sf::Event& event)
     {
         m_eventQueue.push_back(Event(event));

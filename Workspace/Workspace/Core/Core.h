@@ -5,6 +5,8 @@
 #include <string>
 #include <queue>
 #include <unordered_map>
+#include <functional>
+#include <thread>
 
 #include <SFML/Graphics.hpp>
 

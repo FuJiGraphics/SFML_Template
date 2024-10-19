@@ -1,6 +1,5 @@
 #include "Branch.h"
 #include "Player.h"
-#include "UI.h"
 
 using namespace fz;
 
@@ -22,8 +21,9 @@ Branch::~Branch()
 
 void Branch::OnAttach()
 {
-	auto& tex = TextureMap::GetTexture("res/graphics/branch.png");
-	m_branch.setTexture(tex);
+	Texture::Load("res/graphics/branch.png");
+	auto& texture = Texture::Get("res/graphics/branch.png");
+	m_branch.setTexture(texture);
 	m_branch.setOrigin(m_origin);
 	m_branch.setPosition(m_pos);
 	if (m_flip[0])
@@ -46,8 +46,6 @@ void Branch::OnDraw(sf::RenderWindow& device)
 
 void Branch::OnUpdate(float dt)
 {
-	if (System::IsFirstEvent())
-		return;
 	if (m_Destroyed)
 		return;
 
@@ -62,12 +60,6 @@ void Branch::OnCollide(Layer* pLayer, const std::string& className)
 	if (className == "Player")
 	{
 		this->Kill(pLayer, className);
-		Layer* target = System::FindLayer("UI");
-		UI* ui = dynamic_cast<UI*>(target);
-		if (ui != nullptr)
-		{
-			ui->SetGameOver(true);
-		}
 	}
 }
 

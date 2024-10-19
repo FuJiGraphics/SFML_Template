@@ -57,13 +57,18 @@ namespace fz {
 				m_resources.clear();
 			}
 
-			T& Get(const std::string& path)
+			T& Get_Safety(const std::string& path)
 			{
 				auto target = m_resources.find(path);
 				if (target == m_resources.end())
 					return (Empty);
 
 				return (*target->second);
+			}
+
+			T& Get(const std::string& path)
+			{
+				return (*m_resources[path]);
 			}
 
 

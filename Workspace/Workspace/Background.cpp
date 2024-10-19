@@ -11,8 +11,9 @@ Background::~Background()
 void Background::OnAttach()
 {
 	// 배경화면
-	auto& tex = TextureMap::GetTexture("res/graphics/background.png");
-	m_background.setTexture(tex);
+	Texture::Load("res/graphics/background.png");
+	auto& texture = Texture::Get("res/graphics/background.png");
+	m_background.setTexture(texture);
 }
 
 void Background::OnUpdate(float dt)

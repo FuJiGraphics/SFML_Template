@@ -1,5 +1,5 @@
 #pragma once
-#include "App.h"
+#include "Engine.h"
 
 // 가지 왼쪽, 오른쪽에 있거나 없거나 (방향 3개)
 // 플레이어 나무 기준 왼쪽, 오른쪽
@@ -20,14 +20,14 @@ public:
 	void			OnUI(sf::RenderWindow& device) override;
 	std::string		GetName() const;
 
-	void			SetGameOver(bool enabled);
+	void			RegainTimebar(float width);
 
 private:
-	sf::Font			m_font;
-	sf::Text			m_scoreText1;
+	sf::Text			m_score;
 	sf::Text			m_gameStart;
 	sf::Text			m_gameOver;
 	sf::Text			m_state;
 	sf::RectangleShape	m_timeBar;
 	float				m_timeBarSpeed;
+	float				m_timeBarWidth;
 };

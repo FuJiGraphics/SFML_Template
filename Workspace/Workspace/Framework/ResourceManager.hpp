@@ -23,6 +23,12 @@ namespace fz {
 	}
 
 	template<typename T>
+	inline T& ResourceManager<T>::Get_Safety(const std::string& path)
+	{
+		return (_internel::ResourceManager_internal<T>::Instance().Get_Safety(path));
+	}
+
+	template<typename T>
 	inline T& ResourceManager<T>::Get(const std::string& path)
 	{
 		return (_internel::ResourceManager_internal<T>::Instance().Get(path));

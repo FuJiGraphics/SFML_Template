@@ -21,7 +21,7 @@ namespace fz {
         // Empty
     }
 
-    sf::Event Event::get()
+    sf::Event& Event::get()
     {
         return (m_event);
     }

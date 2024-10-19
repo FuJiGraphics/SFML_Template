@@ -10,14 +10,8 @@ namespace fz {
 
 	System& System::GetInstance()
 	{
-		static System s_system;
+		static	System	s_system;
 		return (s_system);
-	}
-
-	void System::Delete()
-	{
-		System& system = System::GetInstance();
-		system.Reset();
 	}
 
 	void System::AttachLayer(Layer* pLayer)
@@ -84,7 +78,7 @@ namespace fz {
 		system.m_isReset = enabled;
 	}
 
-	bool System::GetResetStatus()
+	bool System::IsReset()
 	{
 		System& system = System::GetInstance();
 		return (system.m_isReset);
@@ -96,21 +90,15 @@ namespace fz {
 		return (system.m_isPause);
 	}
 
-	bool System::IsFirstEvent()
-	{
-		System& system = System::GetInstance();
-		return (system.m_isFirstStart);
-	}
-
-	void System::CreateWindow(int width, int height, const char* title)
+	void System::CreateWindow(const WindowInfo& info)
 	{
 		if (m_window != nullptr)
 			return;
 
-		m_window = new Window(width, height, title);
+		m_window = new Window(info.Width, info.Height, info.Title.c_str());
 		m_window->Create();
-		m_width = width;
-		m_height = height;
+		m_width = info.Width;
+		m_height = info.Height;
 	}
 
 	void System::Run()
@@ -120,6 +108,8 @@ namespace fz {
 		{
 			EventQueue eventQueue;
  			float dt = clock.restart().asSeconds() * s_timeScale;
+			s_timeScale = (m_isPause) ? 0.0f : 1.0f;
+
 			// 레이어 추가 요청 처리
 			m_layerArray->WorkingInsertLayers();
 
@@ -127,62 +117,13 @@ namespace fz {
 			m_window->Event(&eventQueue);
 
 			// Layer 이벤트 전송
-			for (auto& event : eventQueue)
-			{
-				switch (event.get().type)
-				{
-					// 일시 정지
-					case sf::Event::KeyPressed:
-					{
-						static bool prevPauseFlag = true;
-						switch (event.get().key.code)
-						{
-							case sf::Keyboard::Escape:
-								prevPauseFlag = (prevPauseFlag) ? false : true;
-								this->SetPause(prevPauseFlag);
-								break;
-							case sf::Keyboard::Return:
-							{
-								if (m_isFirstStart)
-									m_isFirstStart = false;
-								else
-								{
-									Layer* target = System::FindLayer("Player");
-									Player* p = dynamic_cast<Player*>(target);
-									if (p != nullptr)
-									{
-										if (!p->IsAlive())
-											this->SetReset(true);
-									}
-								}
-							} break;
-						}
-					}
-				}
-
-				if (!m_isPause)
-				{
-					for (auto layer : (*m_layerArray))
-					{
-						if (!event.empty())
-							layer->OnEvent(event);
-						else
-							break;
-					}
-				}
-			} // for (auto& event : eventQueue)
+			eventQueue.DispatchTo(*m_layerArray);
 
 			// Layer 업데이트
-			if (!m_isPause)
+			for (auto layer : (*m_layerArray))
 			{
-				for (auto layer : (*m_layerArray))
-				{
-					layer->OnUpdate(dt);
-				}
+				layer->OnUpdate(dt);
 			}
-
-			// 삭제 요청된 레이어 정리
-			m_layerArray->WorkingGarbage();
 
 			// 충돌 체크
 			auto& colManager = ColliderManager::GetInstance();
@@ -193,6 +134,9 @@ namespace fz {
 					(*collider1)->IsCollided(**collider2);
 				}
 			}
+
+			// 삭제 요청된 레이어 정리
+			m_layerArray->WorkingGarbage();
 
 			// 모든 오브젝트 그리기
 			auto& device = m_window->GetHandle();
@@ -226,9 +170,10 @@ namespace fz {
 		m_isPlaying = true;
 		m_isPause = false;
 		m_isReset = false;
-		m_isFirstStart = true;
 		this->ReleaseLayerArray();
 		this->CreateLayerArray();
+		fz::Texture::UnloadAll();
+		fz::Font::UnloadAll();
 	}
 
 	int System::GetWidth()
@@ -241,20 +186,14 @@ namespace fz {
 		return (m_height);
 	}
 
-	sf::RenderWindow& System::GetDevice()
-	{
-		return (m_window->GetHandle());
-	}
-
 	System::System()
 		: m_window(nullptr)
-		, m_layerArray(nullptr)
 		, m_width(0)
 		, m_height(0)
+		, m_layerArray(nullptr)
 		, m_isPlaying(true)
 		, m_isPause(false)
 		, m_isReset(false)
-		, m_isFirstStart(true)
 	{
 		this->CreateLayerArray();
 	}
@@ -293,3 +232,6 @@ namespace fz {
 	}
 
 } // namespace fz
+
+
+

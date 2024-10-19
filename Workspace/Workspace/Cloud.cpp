@@ -18,7 +18,8 @@ Cloud::~Cloud()
 
 void Cloud::OnAttach()
 {
-	auto& tex = TextureMap::GetTexture("res/graphics/cloud.png");
+	Texture::Load("res/graphics/cloud.png");
+	auto& tex = Texture::Get("res/graphics/cloud.png");
 	m_cloud.setTexture(tex);
 
 	// 바깥 기준 설정
@@ -104,5 +105,6 @@ std::string Cloud::GetName() const
 {
 	return ("Cloud");
 }
+
 
 

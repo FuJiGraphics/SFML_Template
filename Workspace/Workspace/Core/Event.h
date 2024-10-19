@@ -11,13 +11,13 @@ namespace fz {
         explicit Event(const Event& other);
         virtual ~Event();
 
-        sf::Event   get();
-        void        use();
-        bool        empty() const;
+        sf::Event&   get();
+        void         use();
+        bool         empty() const;
 
     private:
-        sf::Event   m_event;
-        bool        m_used;
+        sf::Event    m_event;
+        bool         m_used;
     };
 
 } // namespace fz

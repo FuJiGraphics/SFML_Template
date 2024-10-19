@@ -15,13 +15,14 @@ Bee::~Bee()
 
 void Bee::OnAttach()
 {
-	auto& tex = TextureMap::GetTexture("res/graphics/bee.png");
-	m_bee.setTexture(tex);
+	Texture::Load("res/graphics/bee.png");
+	auto& texture = Texture::Get("res/graphics/bee.png");
+	m_bee.setTexture(texture);
 
 	// 바깥 기준 설정
 	auto& system = System::GetInstance();
-	s_wall.left = (tex.getSize().x) * -1.0f;
-	s_wall.width = system.GetWidth() + (tex.getSize().x);
+	s_wall.left = (texture.getSize().x) * -1.0f;
+	s_wall.width = system.GetWidth() + (texture.getSize().x);
 
 	// 기본 포지션, 방향 설정
 	this->ResetPos();
