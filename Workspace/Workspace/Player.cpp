@@ -53,7 +53,10 @@ void Player::OnEvent(fz::Event& event)
 		Move(Direction::Left);
 		m_flip = true;
 		if (u != nullptr)
+		{
 			u->RegainTimebar(100.0f);
+			u->AddScore(10);
+		}
 		// event.use();
 	}
 	if (ev.type == ev.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
@@ -61,7 +64,10 @@ void Player::OnEvent(fz::Event& event)
 		Move(Direction::Right);
 		m_flip = false;
 		if (u != nullptr)
+		{
 			u->RegainTimebar(30.0f);
+			u->AddScore(10);
+		}
 		// event.use();
 	}
 }

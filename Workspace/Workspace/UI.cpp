@@ -17,11 +17,11 @@ void UI::OnAttach()
 	// 폰트
 	fz::Font::Load("res/fonts/KOMIKAP_.ttf");
 	auto& font = fz::Font::Get("res/fonts/KOMIKAP_.ttf");
-	m_score.setFont(font);
-	m_score.setString("Score = 0");
-	m_score.setCharacterSize(100);
-	m_score.setFillColor(sf::Color::White);
-	m_score.setPosition(10.0f, 10.0f);
+	m_scoreText.setFont(font);
+	m_scoreText.setString("Score = 0");
+	m_scoreText.setCharacterSize(100);
+	m_scoreText.setFillColor(sf::Color::White);
+	m_scoreText.setPosition(10.0f, 10.0f);
 
 	m_state.setFont(font);
 	m_state.setString("PAUSE!");
@@ -59,11 +59,12 @@ void UI::OnAttach()
 	float timeBarDuration = 3.0f; // 타이머가 0이 되기까지 시간
 	float timerBarTime = timeBarDuration;
 	m_timeBarSpeed = m_timeBarWidth / timeBarDuration; // 3초마다 삭제됨
+	m_score = 0;
 }
 
 void UI::OnUpdate(float dt)
 {
-	// m_scoreText1.setString("Score = " + std::to_string(g_score));
+	m_scoreText.setString("Score = " + std::to_string(m_score));
 
 	sf::Vector2f size = m_timeBar.getSize();
 	size.x -= m_timeBarSpeed * dt;
@@ -83,7 +84,7 @@ void UI::OnUpdate(float dt)
 
 void UI::OnUI(sf::RenderWindow& device)
 {
-	device.draw(m_score);
+	device.draw(m_scoreText);
 	Layer* target = fz::System::FindLayer("Player");
 	Player* p = dynamic_cast<Player*>(target);
 	target = fz::System::FindLayer("Application");
@@ -103,6 +104,11 @@ std::string UI::GetName() const
 	return ("UI");
 }
 
+void UI::AddScore(int add)
+{
+	m_score += add;
+}
+
 void UI::RegainTimebar(float width)
 {
 	float regain = m_timeBar.getSize().x + width;
@@ -112,15 +118,5 @@ void UI::RegainTimebar(float width)
 
 void UI::OnEvent(fz::Event& event)
 {
-	sf::Event& ev = event.get();
-	if (ev.type == ev.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-	{
-		// g_score += 10;
-		event.use();
-	}
-	if (ev.type == ev.KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-	{
-		// g_score -= 10;
-		event.use();
-	}
+	// Empty
 }

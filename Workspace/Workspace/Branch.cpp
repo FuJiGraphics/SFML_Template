@@ -95,7 +95,11 @@ void Branch::Kill(Layer* player, const std::string& className)
 {
 	if (className == "Player")
 	{
-		dynamic_cast<Player*>(player)->Dead(true);
-		this->Destroy(true);
+		Player* p = dynamic_cast<Player*>(player);
+		if (p != nullptr)
+		{
+			p->Dead(true);
+			this->Destroy(true);
+		}
 	}
 }

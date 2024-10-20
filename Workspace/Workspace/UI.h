@@ -20,14 +20,16 @@ public:
 	void			OnUI(sf::RenderWindow& device) override;
 	std::string		GetName() const;
 
+	void			AddScore(int add);
 	void			RegainTimebar(float width);
 
 private:
-	sf::Text			m_score;
+	sf::Text			m_scoreText;
 	sf::Text			m_gameStart;
 	sf::Text			m_gameOver;
 	sf::Text			m_state;
 	sf::RectangleShape	m_timeBar;
 	float				m_timeBarSpeed;
 	float				m_timeBarWidth;
+	int					m_score;
 };
