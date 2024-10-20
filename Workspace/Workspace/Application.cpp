@@ -8,16 +8,6 @@
 
 using namespace fz;
 
-WindowInfo fz::CreateApplication()
-{
-	return { 1920, 1080, "Game" };
-}
-
-void fz::Runtime()
-{
-	System::AttachLayer(new Application);
-}
-
 void Application::OnAttach()
 {
 	auto& system = System::GetInstance();

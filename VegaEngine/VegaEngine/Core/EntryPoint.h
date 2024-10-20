@@ -1,7 +1,7 @@
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 
-#include "System.h"
+#include "Core/System.h"
 
 namespace fz {
 	namespace _internal {
@@ -47,7 +47,7 @@ namespace fz {
 
 using namespace fz;
 
-void Process()
+static void BeginProcess()
 {
 	WindowInfo& info = CreateApplication();
 	fz::_internal::App app(info.Width, info.Height, info.Title.c_str());
@@ -59,14 +59,4 @@ void Process()
 	} while (app.IsReset());
 
 	app.Reset();
-}
-
-int main(void)
-{
-	Process();
-	
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
-
-	return (0);
 }

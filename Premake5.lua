@@ -1,3 +1,5 @@
+version = "1.0.0"
+
 workspace "Solution"
 	startproject "Workspace"
 	architecture "x86_64"
@@ -17,11 +19,14 @@ workspace "Solution"
 
 	IncludeDir = {};
 	IncludeDir["SFML"] = "%{wks.location}/Vendor/SFML-2.6.1"
+	IncludeDir["VEGAENGINE"] = "%{wks.location}/Vendor/VegaEngine-"..version
+	IncludeDir["WORKSPACE"] = "%{wks.location}/Workspace/Workspace"
 
 	group "Dependencies"
 		include "Vendor/premake5"
 		include "Example"
 	group ""
 
+include "VegaEngine"
 include "Workspace"
 

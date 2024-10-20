@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "LayerArray.h"
 #include "ColliderManager.h"
-#include "Player.h"
+#include "Framework/ResourceManager.h"
 
 namespace fz {
 

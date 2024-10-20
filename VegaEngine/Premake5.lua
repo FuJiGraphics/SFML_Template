@@ -1,6 +1,6 @@
-project "Workspace"
-	location "Workspace"
-	kind "ConsoleApp"
+project "VegaEngine"
+	location "VegaEngine"
+	kind "StaticLib"
 	language "C++"
 	cppdialect "C++17"
 	staticruntime "off"
@@ -11,32 +11,38 @@ project "Workspace"
 
 -- 작업 디렉토리 설정 (상대 경로 설정)
 -- debugdir
-targetdir("../Build/Bin/"..outputDir.."/%{prj.name}")
-objdir("../Build/Bin-int/"..outputDir.."/%{prj.name}")
+targetdir("%{wks.location}/Vendor/%{prj.name}-"..version.."/lib/%{cfg.buildcfg}/")
+objdir("%{wks.location}/Vendor/%{prj.name}-"..version.."/bin-int/%{cfg.buildcfg}/")
 
 files
 {
 	"%{prj.name}/**.cpp",
-	"%{prj.name}/**.h"
+	"%{prj.name}/**.hpp",
+	"%{prj.name}/**.h",
 }
 
 includedirs
 {
 	"%{prj.name}",
-	"%{IncludeDir.VEGAENGINE}/include/",
 	"%{wks.location}/Vendor/SFML-2.6.1/include/",
 }
 
 libdirs
 {
-	"%{IncludeDir.SFML}/lib/",
 	"%{IncludeDir.SFML}/lib/%{cfg.buildcfg}/",
-	"%{IncludeDir.VEGAENGINE}/lib/%{cfg.buildcfg}/"
+	"%{IncludeDir.SFML}/lib/",
+}
+
+prebuildcommands 
+{
+    "mkdir \"D:\\project\\SFML_Template\\Vendor\\%{prj.name}-"..version.."\\include\\%{prj.name}\"",
+    -- ENGINE 헤더 파일 재귀적 복사
+     "xcopy /Y /S \"%{IncludeDir.ENGINE}*.h\" \"%{wks.location}Vendor\\%{prj.name}-"..version.."\\include\\%{prj.name}\"",
+     "xcopy /Y /S \"%{IncludeDir.ENGINE}*.hpp\" \"%{wks.location}Vendor\\%{prj.name}-"..version.."\\include\\%{prj.name}\""
 }
 
 links
 {
-	"VegaEngine",
 	"flac.lib",
 	"freetype.lib",
 	"ogg.lib",
@@ -50,12 +56,6 @@ links
 	"sfml-network.lib",
 	"sfml-system.lib",
 	"sfml-window.lib",
-	"VegaEngine.lib",
-}
-
-prebuildcommands 
-{ 
-	"{COPYFILE} %[%{wks.location}/Vendor/SFML-2.6.1/bin/**.dll] %[%{wks.location}/Build/Bin/"..outputDir.."/%{prj.name}]",
 }
 
 filter "system:Windows"
