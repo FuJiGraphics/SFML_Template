@@ -1,3 +1,4 @@
+#include "Core/stdafx.h"
 #include "System.h"
 #include "Window.h"
 #include "LayerArray.h"

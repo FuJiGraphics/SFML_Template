@@ -1,3 +1,4 @@
+#include "Core/stdafx.h"
 #include "Math.h"
 #include <random>
 

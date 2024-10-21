@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Cloud.h"
 
 using namespace fz;

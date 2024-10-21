@@ -1,3 +1,4 @@
+#include "Core/stdafx.h"
 #include "ImguiManager.h"
 //imgui
 #include <windows.h>

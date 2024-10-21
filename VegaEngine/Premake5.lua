@@ -6,8 +6,8 @@ project "VegaEngine"
 	staticruntime "off"
 	systemversion "latest"
 
--- pchheader "pch.h"
--- pchsource "%{prj.name}/src/pch.cpp"
+pchheader "Core/stdafx.h"
+pchsource "%{prj.name}/Core/stdafx.cpp"
 
 -- 작업 디렉토리 설정 (상대 경로 설정)
 -- debugdir

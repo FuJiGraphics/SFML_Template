@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Branch.h"
 #include "Player.h"
 

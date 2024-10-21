@@ -1,3 +1,4 @@
+#include "Core/stdafx.h"
 #include "ColliderManager.h"
 
 namespace fz {

@@ -1,3 +1,4 @@
+#include "Core/stdafx.h"
 #include "Window.h"
 #include <SFML/Window.hpp>
 

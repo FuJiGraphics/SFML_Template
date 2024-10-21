@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Bee.h"
 
 using namespace fz;

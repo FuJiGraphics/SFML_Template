@@ -1,5 +1,6 @@
 #pragma once
 
+// standards
 #include <iostream>
 #include <vector>
 #include <string>
@@ -8,7 +9,7 @@
 #include <functional>
 #include <thread>
 
-// Graphics
+// graphics
 #include <SFML/Graphics.hpp>
 
 // imgui

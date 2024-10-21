@@ -1,3 +1,4 @@
+#include "Core/stdafx.h"
 #include "Event.h"
 
 namespace fz {

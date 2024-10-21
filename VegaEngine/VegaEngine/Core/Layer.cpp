@@ -1,3 +1,4 @@
+#include "Core/stdafx.h"
 #include "Layer.h"
 #include "LayerArray.h"
 #include "Collider.h"

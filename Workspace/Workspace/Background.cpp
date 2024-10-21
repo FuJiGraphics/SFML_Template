@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Background.h"
 
 using namespace fz;

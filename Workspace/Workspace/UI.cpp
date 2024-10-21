@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "UI.h"
 #include "Application.h"
 #include "Player.h"
