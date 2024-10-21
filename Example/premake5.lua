@@ -6,8 +6,8 @@ cppdialect "C++17"
 staticruntime "off"
 systemversion "latest"
 
--- pchheader "pch.h"
--- pchsource "%{prj.name}/src/pch.cpp"
+pchheader "stdafx.h"
+pchsource "%{prj.name}/stdafx.cpp"
 
 targetdir("../Build/Bin/"..outputDir.."/%{prj.name}")
 objdir("../Build/Bin-int/"..outputDir.."/%{prj.name}")
@@ -19,7 +19,8 @@ prebuildcommands
 
 files
 {
-	"%{prj.name}/main.cpp",
+	"%{prj.name}/**.cpp",
+	"%{prj.name}/**.h",
 }
 
 includedirs

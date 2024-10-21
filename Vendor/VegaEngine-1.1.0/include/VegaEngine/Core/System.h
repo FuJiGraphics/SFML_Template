@@ -51,16 +51,15 @@ namespace fz {
 		void	ReleaseLayerArray();
 
 	private:
-		Window*			m_window;
-		Window*			m_child;
-		int				m_width;
-		int				m_height;
-		LayerArray*		m_layerArray;
-		bool			m_isPause;
-		bool			m_isPlaying;
-		bool			m_isReset;
-		static float	s_timeScale;
+		Window*				m_window;
+		int					m_width;
+		int					m_height;
+		LayerArray*			m_layerArray;
+		bool				m_isPause;
+		bool				m_isPlaying;
+		bool				m_isReset;
 		sf::RenderTexture	m_RenderTarget;
+		static float		s_timeScale;
 	};
 
 	WindowInfo	CreateApplication();
