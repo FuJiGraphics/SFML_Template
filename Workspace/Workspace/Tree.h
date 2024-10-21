@@ -8,12 +8,12 @@ public:
 	Tree(int posX, int posY);
 	~Tree();
 
-	void	OnAttach() override;
-	void	OnDraw(sf::RenderWindow& device) override;
-	void	OnEvent(fz::Event& event) override;
+	void			OnAttach() override;
+	void			OnDraw(sf::RenderWindow& device) override;
+	void			OnEvent(fz::Event& event) override;
 	std::string		GetName() const;
 
-	bool	CutOff();
+	bool			CutOff();
 
 private:
 	sf::Sprite				m_tree;

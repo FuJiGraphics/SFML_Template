@@ -7,14 +7,14 @@ public:
 	Cloud();
 	~Cloud();
 
-	void OnAttach() override;
-	void OnUpdate(float dt) override;
-	void OnDraw(sf::RenderWindow& device) override;
-
-	void ResetPos();
-	void Move(float dt, Direction dir, float speed);
-	bool CollideWall();
+	void			OnAttach() override;
+	void			OnUpdate(float dt) override;
+	void			OnDraw(sf::RenderWindow& device) override;
 	std::string		GetName() const override;
+
+	void			ResetPos();
+	void			Move(float dt, Direction dir, float speed);
+	bool			CollideWall();
 
 private:
 	sf::Sprite				m_cloud;

@@ -55,6 +55,7 @@ links
 
 prebuildcommands 
 { 
+    "mkdir \"%{wks.location}\\Vendor\\VegaEngine-"..version.."\\include\\VegaEngine\"",
 	"{COPYFILE} %[%{wks.location}/Vendor/SFML-2.6.1/bin/**.dll] %[%{wks.location}/Build/Bin/"..outputDir.."/%{prj.name}]",
 }
 

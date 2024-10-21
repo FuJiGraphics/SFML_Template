@@ -8,9 +8,9 @@ public:
 	Background();
 	~Background();
 
-	void OnAttach() override;
-	void OnUpdate(float dt) override;
-	void OnDraw(sf::RenderWindow& device) override;
+	void			OnAttach() override;
+	void			OnUpdate(float dt) override;
+	void			OnDraw(sf::RenderWindow& device) override;
 	std::string		GetName() const override;
 
 private:

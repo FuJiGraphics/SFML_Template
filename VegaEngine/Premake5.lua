@@ -35,7 +35,7 @@ libdirs
 
 prebuildcommands 
 {
-    "mkdir \"D:\\project\\SFML_Template\\Vendor\\%{prj.name}-"..version.."\\include\\%{prj.name}\"",
+    "mkdir \"%{wks.location}\\Vendor\\VegaEngine-"..version.."\\include\\VegaEngine\"",
     -- ENGINE 헤더 파일 재귀적 복사
      "xcopy /Y /S \"%{IncludeDir.ENGINE}*.h\" \"%{wks.location}Vendor\\%{prj.name}-"..version.."\\include\\%{prj.name}\"",
      "xcopy /Y /S \"%{IncludeDir.ENGINE}*.hpp\" \"%{wks.location}Vendor\\%{prj.name}-"..version.."\\include\\%{prj.name}\""
