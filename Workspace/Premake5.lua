@@ -54,7 +54,6 @@ links
 	"sfml-window.lib",
 	"opengl32.lib",
 	"VegaEngine.lib",
-	"ImGui.lib",
 }
 
 prebuildcommands 
