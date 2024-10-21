@@ -1,4 +1,4 @@
-﻿  하위 디렉터리 또는 파일 D:\sfml\\Vendor\VegaEngine-1.1.0\include\VegaEngine이(가) 이미 있습니다.
+﻿  하위 디렉터리 또는 파일 D:\VegaEngine\\Vendor\VegaEngine-1.1.0\include\VegaEngine이(가) 이미 있습니다.
   D:Engine.h
   D:Core\Collider.h
   D:Core\ColliderManager.h
@@ -19,8 +19,58 @@
   17개 파일이 복사되었습니다.
   D:Framework\ResourceManager.hpp
   1개 파일이 복사되었습니다.
+  stdafx.cpp
+  Collider.cpp
+  ColliderManager.cpp
+  Event.cpp
+  EventQueue.cpp
+  Layer.cpp
+  LayerArray.cpp
   System.cpp
-D:\sfml\VegaEngine\VegaEngine\Core\System.cpp(178,17): warning C4312: '형식 캐스트': 'const unsigned int'에서 더 큰 'void *'(으)로의 변환입니다.
+  Window.cpp
+  ImguiManager.cpp
+  Math.cpp
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(30,23): warning C4244: '=': 'T'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(30,23): warning C4244:         with
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(30,23): warning C4244:         [
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(30,23): warning C4244:             T=float
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(30,23): warning C4244:         ]
+  (소스 파일 '/Core/Collider.cpp'을(를) 컴파일하는 중)
+  
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(31,23): warning C4244: '=': 'T'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(31,23): warning C4244:         with
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(31,23): warning C4244:         [
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(31,23): warning C4244:             T=float
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(31,23): warning C4244:         ]
+  (소스 파일 '/Core/Collider.cpp'을(를) 컴파일하는 중)
+  
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(32,23): warning C4244: '=': 'T'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(32,23): warning C4244:         with
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(32,23): warning C4244:         [
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(32,23): warning C4244:             T=float
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(32,23): warning C4244:         ]
+  (소스 파일 '/Core/Collider.cpp'을(를) 컴파일하는 중)
+  
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(33,23): warning C4244: '=': 'T'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(33,23): warning C4244:         with
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(33,23): warning C4244:         [
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(33,23): warning C4244:             T=float
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider.cpp(33,23): warning C4244:         ]
+  (소스 파일 '/Core/Collider.cpp'을(를) 컴파일하는 중)
+  
+D:\VegaEngine\VegaEngine\VegaEngine\Core\LayerArray.cpp(17,16): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/Core/LayerArray.cpp'을(를) 컴파일하는 중)
+  
+D:\VegaEngine\VegaEngine\VegaEngine\Core\ColliderManager.cpp(69,12): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/Core/ColliderManager.cpp'을(를) 컴파일하는 중)
+  
+D:\VegaEngine\VegaEngine\VegaEngine\Platform\ImGui\ImguiManager.cpp(15,84): warning C4244: '인수': 'float'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/Platform/ImGui/ImguiManager.cpp'을(를) 컴파일하는 중)
+  
+D:\VegaEngine\VegaEngine\VegaEngine\Platform\ImGui\ImguiManager.cpp(15,66): warning C4244: '인수': 'float'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/Platform/ImGui/ImguiManager.cpp'을(를) 컴파일하는 중)
+  
+D:\VegaEngine\VegaEngine\VegaEngine\Core\System.cpp(178,17): warning C4312: '형식 캐스트': 'const unsigned int'에서 더 큰 'void *'(으)로의 변환입니다.
   (소스 파일 '/Core/System.cpp'을(를) 컴파일하는 중)
   
 vorbisenc.lib(vorbisenc.obj) : warning LNK4006: vorbis_encode_init이(가) vorbis.lib(vorbisenc.obj)에 이미 정의되어 있습니다. 초 정의가 무시됩니다.
@@ -34,4 +84,4 @@ sfml-graphics.lib(sfml-graphics-d-2.dll) : warning LNK4006: __NULL_IMPORT_DESCRI
 sfml-network.lib(sfml-network-d-2.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR이(가) openal32.lib(OpenAL32.dll)에 이미 정의되어 있습니다. 초 정의가 무시됩니다.
 sfml-system.lib(sfml-system-d-2.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR이(가) openal32.lib(OpenAL32.dll)에 이미 정의되어 있습니다. 초 정의가 무시됩니다.
 sfml-window.lib(sfml-window-d-2.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR이(가) openal32.lib(OpenAL32.dll)에 이미 정의되어 있습니다. 초 정의가 무시됩니다.
-  VegaEngine.vcxproj -> D:\sfml\Vendor\VegaEngine-1.1.0\lib\Debug\VegaEngine.lib
+  VegaEngine.vcxproj -> D:\VegaEngine\Vendor\VegaEngine-1.1.0\lib\Debug\VegaEngine.lib
