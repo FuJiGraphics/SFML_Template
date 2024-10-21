@@ -18,8 +18,9 @@ namespace fz {
 		virtual void			OnDetach();
 		virtual void			OnEvent(fz::Event& event);
 		virtual void			OnUpdate(float dt);
-		virtual void			OnDraw(sf::RenderWindow& device);
-		virtual void			OnUI(sf::RenderWindow& device);
+		virtual void			OnDraw(sf::RenderTexture& device);
+		virtual void			OnUI(sf::RenderTexture& device);
+		virtual void			OnImGui();
 		virtual void			OnCollide(Layer* pLayer, const std::string& className);
 		virtual std::string		GetName() const = 0;
 

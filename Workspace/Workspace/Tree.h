@@ -9,7 +9,7 @@ public:
 	~Tree();
 
 	void			OnAttach() override;
-	void			OnDraw(sf::RenderWindow& device) override;
+	void			OnDraw(sf::RenderTexture& device) override;
 	void			OnEvent(fz::Event& event) override;
 	std::string		GetName() const;
 

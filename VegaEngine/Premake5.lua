@@ -25,12 +25,14 @@ includedirs
 {
 	"%{prj.name}",
 	"%{wks.location}/Vendor/SFML-2.6.1/include/",
+	"%{IncludeDir.IMGUI}/include/",
 }
 
 libdirs
 {
 	"%{IncludeDir.SFML}/lib/%{cfg.buildcfg}/",
 	"%{IncludeDir.SFML}/lib/",
+	"%{IncludeDir.IMGUI}/lib/%{cfg.buildcfg}/",
 }
 
 prebuildcommands 

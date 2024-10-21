@@ -38,7 +38,7 @@ void Bee::OnUpdate(float dt)
 	}
 }
 
-void Bee::OnDraw(sf::RenderWindow& device)
+void Bee::OnDraw(sf::RenderTexture& device)
 {
 	device.draw(m_bee);
 }

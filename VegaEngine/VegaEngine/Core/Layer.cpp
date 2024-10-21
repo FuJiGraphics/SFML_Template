@@ -44,12 +44,17 @@ namespace fz {
         // Empty
     }
 
-    void Layer::OnDraw(sf::RenderWindow& device)
+    void Layer::OnDraw(sf::RenderTexture& device)
     {
         // Empty
     }
 
-    void Layer::OnUI(sf::RenderWindow& device)
+    void Layer::OnUI(sf::RenderTexture& device)
+    {
+        // Empty
+    }
+
+    void Layer::OnImGui()
     {
         // Empty
     }

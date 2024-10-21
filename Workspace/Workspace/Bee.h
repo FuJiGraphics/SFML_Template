@@ -10,7 +10,7 @@ public:
 
 	void			OnAttach() override;
 	void			OnUpdate(float dt) override;
-	void			OnDraw(sf::RenderWindow& device) override;
+	void			OnDraw(sf::RenderTexture& device) override;
 	std::string		GetName() const override;
 
 	void			ResetPos();

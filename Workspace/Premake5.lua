@@ -25,13 +25,15 @@ includedirs
 	"%{prj.name}",
 	"%{IncludeDir.VEGAENGINE}/include/",
 	"%{wks.location}/Vendor/SFML-2.6.1/include/",
+	"%{IncludeDir.IMGUI}/include",
 }
 
 libdirs
 {
 	"%{IncludeDir.SFML}/lib/",
 	"%{IncludeDir.SFML}/lib/%{cfg.buildcfg}/",
-	"%{IncludeDir.VEGAENGINE}/lib/%{cfg.buildcfg}/"
+	"%{IncludeDir.VEGAENGINE}/lib/%{cfg.buildcfg}/",
+	"%{IncludeDir.IMGUI}/lib/%{cfg.buildcfg}/",
 }
 
 links
@@ -50,6 +52,8 @@ links
 	"sfml-network.lib",
 	"sfml-system.lib",
 	"sfml-window.lib",
+	"opengl32.lib",
+	"ImGui.lib",
 	"VegaEngine.lib",
 }
 

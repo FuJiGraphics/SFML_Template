@@ -15,7 +15,7 @@ namespace fz {
 			void Create()
 			{
 				auto& system = System::GetInstance();
-				system.CreateWindow({ w, h, title });
+				system.GenerateWindow({ w, h, title });
 			}
 			void Run()
 			{

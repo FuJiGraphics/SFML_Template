@@ -41,7 +41,7 @@ void Cloud::OnUpdate(float dt)
 	}
 }
 
-void Cloud::OnDraw(sf::RenderWindow& device)
+void Cloud::OnDraw(sf::RenderTexture& device)
 {
 	device.draw(m_cloud);
 }

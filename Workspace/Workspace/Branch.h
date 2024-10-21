@@ -8,7 +8,7 @@ public:
 	~Branch();
 
 	void			OnAttach() override;
-	void			OnDraw(sf::RenderWindow& device) override;
+	void			OnDraw(sf::RenderTexture& device) override;
 	void			OnUpdate(float dt) override;
 	void			OnCollide(Layer* pLayer, const std::string& className) override;
 	std::string		GetName() const override;

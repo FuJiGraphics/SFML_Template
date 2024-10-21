@@ -8,7 +8,14 @@
 #include <functional>
 #include <thread>
 
+// Graphics
 #include <SFML/Graphics.hpp>
+
+// imgui
+#include "imgui/imgui.h"
+#include "imgui/imgui_internal.h"
+#include "imgui/backends/imgui_impl_opengl3.h"
+#include "imgui/backends/imgui_impl_win32.h"
 
 namespace fz {
 

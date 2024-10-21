@@ -41,7 +41,7 @@ namespace fz {
 		System();
 		virtual ~System();
 
-		void	CreateWindow(const WindowInfo& info);
+		void	GenerateWindow(const WindowInfo& info);
 		void	Run();
 		void	Reset();
 
@@ -52,6 +52,7 @@ namespace fz {
 
 	private:
 		Window*			m_window;
+		Window*			m_child;
 		int				m_width;
 		int				m_height;
 		LayerArray*		m_layerArray;
@@ -59,6 +60,7 @@ namespace fz {
 		bool			m_isPlaying;
 		bool			m_isReset;
 		static float	s_timeScale;
+		sf::RenderTexture	m_RenderTarget;
 	};
 
 	WindowInfo	CreateApplication();

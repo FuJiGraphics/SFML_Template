@@ -33,7 +33,7 @@ void Player::OnAttach()
 	this->SetColliderDisplayMode(false);
 }
 
-void Player::OnDraw(sf::RenderWindow& device)
+void Player::OnDraw(sf::RenderTexture& device)
 {
 	device.draw(m_player);
 }

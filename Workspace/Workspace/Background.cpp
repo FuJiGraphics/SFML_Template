@@ -20,7 +20,7 @@ void Background::OnUpdate(float dt)
 {
 }
 
-void Background::OnDraw(sf::RenderWindow& device)
+void Background::OnDraw(sf::RenderTexture& device)
 {
 	device.draw(m_background);
 }

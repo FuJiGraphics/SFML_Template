@@ -82,7 +82,7 @@ void UI::OnUpdate(float dt)
 	m_timeBar.setSize(size);
 }
 
-void UI::OnUI(sf::RenderWindow& device)
+void UI::OnUI(sf::RenderTexture& device)
 {
 	device.draw(m_scoreText);
 	Layer* target = fz::System::FindLayer("Player");

@@ -3,6 +3,7 @@
 #include "LayerArray.h"
 #include "ColliderManager.h"
 #include "Framework/ResourceManager.h"
+#include "Platform/ImGui/ImguiManager.h"
 
 namespace fz {
 
@@ -90,7 +91,7 @@ namespace fz {
 		return (system.m_isPause);
 	}
 
-	void System::CreateWindow(const WindowInfo& info)
+	void System::GenerateWindow(const WindowInfo& info)
 	{
 		if (m_window != nullptr)
 			return;
@@ -99,6 +100,10 @@ namespace fz {
 		m_window->Create();
 		m_width = info.Width;
 		m_height = info.Height;
+
+		m_RenderTarget.create(m_width, m_height);
+
+		ImGuiManager::Initialize(m_window->GetHandle());
 	}
 
 	void System::Run()
@@ -139,25 +144,45 @@ namespace fz {
 			m_layerArray->WorkingGarbage();
 
 			// 모든 오브젝트 그리기
-			auto& device = m_window->GetHandle();
-			device.clear();
+			m_RenderTarget.clear(sf::Color::Red);
 			for (auto layer : (*m_layerArray))
 			{
-				layer->OnDraw(device);
+				layer->OnDraw(m_RenderTarget);
 			}
 			for (auto layer : (*m_layerArray))
 			{
-				layer->OnUI(device);
+				layer->OnUI(m_RenderTarget);
 			}
 			for (auto collider : colManager)
 			{
 				if ((*collider)->IsDisplay())
 				{
 					auto& rect = (*collider)->GetBox();
-					device.draw(rect);
+					m_RenderTarget.draw(rect);
 				}
 			}
-			device.display();
+
+			m_RenderTarget.display();
+			m_window->GetHandle().clear();
+
+			sf::Sprite sprite(m_RenderTarget.getTexture());
+			m_window->GetHandle().draw(sprite);
+
+			// ImGui
+			ImGuiManager::Begin();
+			ImGuiManager::ShowDemo();
+			ImGui::Begin("Scene");
+			ImVec2 windowSize = ImGui::GetContentRegionAvail();
+			const auto& tex = m_RenderTarget.getTexture().getNativeHandle();
+			ImGui::Image((void*)tex, windowSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+			ImGui::End();
+			for (auto layer : (*m_layerArray))
+			{
+				layer->OnImGui();
+			}
+			ImGuiManager::End();
+			// End the current frame and display its contents on screen
+			m_window->GetHandle().display();
 		}
 	}
 
@@ -208,6 +233,7 @@ namespace fz {
 	{
 		if (m_window != nullptr)
 		{
+			ImGuiManager::Shutdown();
 			m_window->Release();
 			delete m_window;
 			m_window = nullptr;

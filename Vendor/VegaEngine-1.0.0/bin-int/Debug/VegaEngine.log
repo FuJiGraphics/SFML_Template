@@ -12,8 +12,9 @@
   D:Framework\ResourceManager.h
   D:Framework\ResourceManager_internal.h
   D:Framework\Singleton.h
+  D:Platform\ImGui\ImguiManager.h
   D:Utility\Math.h
-  15개 파일이 복사되었습니다.
+  16개 파일이 복사되었습니다.
   D:Framework\ResourceManager.hpp
   1개 파일이 복사되었습니다.
   Collider.cpp
@@ -24,6 +25,7 @@
   LayerArray.cpp
   System.cpp
   Window.cpp
+  ImguiManager.cpp
   Math.cpp
 D:\sfml\VegaEngine\VegaEngine\Core\Collider.cpp(29,23): warning C4244: '=': 'T'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 D:\sfml\VegaEngine\VegaEngine\Core\Collider.cpp(29,23): warning C4244:         with
@@ -45,8 +47,11 @@ D:\sfml\VegaEngine\VegaEngine\Core\Collider.cpp(32,23): warning C4244:         w
 D:\sfml\VegaEngine\VegaEngine\Core\Collider.cpp(32,23): warning C4244:         [
 D:\sfml\VegaEngine\VegaEngine\Core\Collider.cpp(32,23): warning C4244:             T=float
 D:\sfml\VegaEngine\VegaEngine\Core\Collider.cpp(32,23): warning C4244:         ]
+D:\sfml\VegaEngine\VegaEngine\Platform\ImGui\ImguiManager.cpp(14,84): warning C4244: '인수': 'float'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 D:\sfml\VegaEngine\VegaEngine\Core\LayerArray.cpp(16,16): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\sfml\VegaEngine\VegaEngine\Platform\ImGui\ImguiManager.cpp(14,66): warning C4244: '인수': 'float'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 D:\sfml\VegaEngine\VegaEngine\Core\ColliderManager.cpp(68,12): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\sfml\VegaEngine\VegaEngine\Core\System.cpp(177,17): warning C4312: '형식 캐스트': 'const unsigned int'에서 더 큰 'void *'(으)로의 변환입니다.
 vorbisenc.lib(vorbisenc.obj) : warning LNK4006: vorbis_encode_init이(가) vorbis.lib(vorbisenc.obj)에 이미 정의되어 있습니다. 초 정의가 무시됩니다.
 vorbisenc.lib(vorbisenc.obj) : warning LNK4006: vorbis_encode_setup_managed이(가) vorbis.lib(vorbisenc.obj)에 이미 정의되어 있습니다. 초 정의가 무시됩니다.
 vorbisenc.lib(vorbisenc.obj) : warning LNK4006: vorbis_encode_setup_vbr이(가) vorbis.lib(vorbisenc.obj)에 이미 정의되어 있습니다. 초 정의가 무시됩니다.

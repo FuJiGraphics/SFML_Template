@@ -17,7 +17,7 @@ public:
 	void			OnAttach() override;
 	void			OnEvent(fz::Event& event) override;
 	void			OnUpdate(float dt) override;
-	void			OnUI(sf::RenderWindow& device) override;
+	void			OnUI(sf::RenderTexture& device) override;
 	std::string		GetName() const;
 
 	void			AddScore(int add);

@@ -38,7 +38,7 @@ void Tree::OnAttach()
 	}
 }
 
-void Tree::OnDraw(sf::RenderWindow& device)
+void Tree::OnDraw(sf::RenderTexture& device)
 {
 	device.draw(m_tree);
 }

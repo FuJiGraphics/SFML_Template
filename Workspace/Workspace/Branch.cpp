@@ -36,7 +36,7 @@ void Branch::OnAttach()
 	this->SetColliderDisplayMode(true);
 }
 
-void Branch::OnDraw(sf::RenderWindow& device)
+void Branch::OnDraw(sf::RenderTexture& device)
 {
 	if (m_Destroyed)
 		return;
