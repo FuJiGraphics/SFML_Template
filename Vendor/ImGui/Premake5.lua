@@ -7,49 +7,54 @@ project "ImGui"
 
     files
 	{
-		"include/imgui/imconfig.h",
-		"include/imgui/imgui.h",
-		"include/imgui/imgui.cpp",
-		"include/imgui/imgui_draw.cpp",
-		"include/imgui/imgui_internal.h",
-		"include/imgui/imgui_widgets.cpp",
-		"include/imgui/imstb_rectpack.h",
-		"include/imgui/imstb_textedit.h",
-		"include/imgui/imstb_truetype.h",
-        "include/imgui/imgui_tables.cpp",
-		"include/imgui/imgui_demo.cpp",
-        "include/imgui/backends/imgui_impl_opengl3.cpp",
-        "include/imgui/backends/imgui_impl_opengl3.h",
-        "include/imgui/backends/imgui_impl_opengl3_loader.h",
-        "include/imgui/backends/imgui_impl_win32.cpp",
-        "include/imgui/backends/imgui_impl_win32.h",
-        "include/imgui/extensions/**.cpp",
-        "include/imgui/extensions/**.h",
+		"imgui.cpp",
+        "imgui_widgets.cpp",
+        "imgui_draw.cpp",
+        "imgui_tables.cpp",
+        "imgui-sfml/imgui-SFML.cpp",
 	}
 
     includedirs
     {
-        "%{IncludeDir.ImGui}/include/",
+        "%{IncludeDir.IMGUI}/",
+        "%{IncludeDir.SFML}/include/",
+        "%{IncludeDir.IMGUI}/include/",
     }
 
 	libdirs 
 	{
+        "%{IncludeDir.SFML}/lib/%{cfg.buildcfg}/",
+	    "%{IncludeDir.SFML}/lib/",
 	}
 
 	links
 	{
+        "flac.lib",
+	    "freetype.lib",
+	    "ogg.lib",
+	    "vorbis.lib",
+	    "vorbisenc.lib",
+	    "vorbisfile.lib",
+	    "openal32.lib",
+	    "sfml-audio.lib",
+	    "sfml-graphics.lib",
+	    "sfml-main.lib",
+	    "sfml-network.lib",
+	    "sfml-system.lib",
+	    "sfml-window.lib",
+        "opengl32.lib",
 	}
 
 	filter "system:windows"
 		systemversion "latest"
 		cppdialect "C++17"
-		staticruntime "On"
+		staticruntime "off"
 
 	filter "system:linux"
 		pic "On"
 		systemversion "latest"
 		cppdialect "C++17"
-		staticruntime "On"
+		staticruntime "off"
 
 	filter "configurations:Debug"
 		runtime "Debug"

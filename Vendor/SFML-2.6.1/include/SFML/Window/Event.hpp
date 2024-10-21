@@ -44,7 +44,7 @@ namespace sf
 class Event
 {
 public:
-
+    Event() = default;
     ////////////////////////////////////////////////////////////
     /// \brief Size events parameters (Resized)
     ///
@@ -234,12 +234,27 @@ public:
         TouchEvent            touch;             //!< Touch events parameters (Event::TouchBegan, Event::TouchMoved, Event::TouchEnded)
         SensorEvent           sensor;            //!< Sensor event parameters (Event::SensorChanged)
     };
+
+    template <typename TEventSubtype>
+    Event(const TEventSubtype& eventSubtype);
+
+    template <typename TEventSubtype>
+    bool is() const;
+
+    ////////////////////////////////////////////////////////////
+    template <typename TEventSubtype>
+    const TEventSubtype* getIf() const;
+
+    ////////////////////////////////////////////////////////////
+    template <typename T>
+    decltype(auto) visit(T&& visitor) const;
 };
 
 } // namespace sf
 
 
 #endif // SFML_EVENT_HPP
+#include <SFML/Window/Event.inl>
 
 
 ////////////////////////////////////////////////////////////

@@ -4,7 +4,6 @@
 #include "LayerArray.h"
 #include "ColliderManager.h"
 #include "Framework/ResourceManager.h"
-#include "Platform/ImGui/ImguiManager.h"
 
 namespace fz {
 
@@ -92,7 +91,7 @@ namespace fz {
 		return (system.m_isPause);
 	}
 
-	void System::GenerateWindow(const WindowInfo& info)
+	void System::Init(const WindowInfo& info)
 	{
 		if (m_window != nullptr)
 			return;
@@ -104,7 +103,7 @@ namespace fz {
 
 		m_RenderTarget.create(m_width, m_height);
 
-		ImGuiManager::Initialize(m_window->GetHandle());
+		ImGuiManager::Init(*m_window);
 	}
 
 	void System::Run()
@@ -113,7 +112,7 @@ namespace fz {
 		while (m_isPlaying && m_window->IsOpen())
 		{
 			EventQueue eventQueue;
- 			float dt = clock.restart().asSeconds() * s_timeScale;
+			sf::Time dt = clock.restart();
 			s_timeScale = (m_isPause) ? 0.0f : 1.0f;
 
 			// 레이어 추가 요청 처리
@@ -128,7 +127,7 @@ namespace fz {
 			// Layer 업데이트
 			for (auto layer : (*m_layerArray))
 			{
-				layer->OnUpdate(dt);
+				layer->OnUpdate(dt.asSeconds());
 			}
 
 			// 충돌 체크
@@ -170,12 +169,11 @@ namespace fz {
 			m_window->GetHandle().draw(sprite);
 
 			// ImGui
-			ImGuiManager::Begin();
-			ImGuiManager::ShowDemo();
+			ImGuiManager::Begin(dt);
 			ImGui::Begin("Scene");
+			ImGuiManager::ShowDemo();
 			ImVec2 windowSize = ImGui::GetContentRegionAvail();
-			const auto& tex = m_RenderTarget.getTexture().getNativeHandle();
-			ImGui::Image((void*)tex, windowSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+			ImGui::Image(m_RenderTarget.getTexture().getNativeHandle(), windowSize, { 0.0f, 1.0f }, {1.0f, 0.0f});
 			ImGui::End();
 			for (auto layer : (*m_layerArray))
 			{
@@ -226,6 +224,7 @@ namespace fz {
 
 	System::~System()
 	{
+		ImGuiManager::Shutdown();
 		ReleaseWindow();
 		ReleaseLayerArray();
 	}
@@ -234,7 +233,6 @@ namespace fz {
 	{
 		if (m_window != nullptr)
 		{
-			ImGuiManager::Shutdown();
 			m_window->Release();
 			delete m_window;
 			m_window = nullptr;

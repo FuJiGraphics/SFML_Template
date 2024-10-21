@@ -25,7 +25,7 @@ includedirs
 {
 	"%{prj.name}",
 	"%{wks.location}/Vendor/SFML-2.6.1/include/",
-	"%{IncludeDir.IMGUI}/include/",
+	"%{IncludeDir.IMGUI}/",
 }
 
 libdirs
@@ -58,6 +58,7 @@ links
 	"sfml-network.lib",
 	"sfml-system.lib",
 	"sfml-window.lib",
+	"ImGui.lib",
 }
 
 filter "system:Windows"

@@ -17,23 +17,23 @@ objdir("../Build/Bin-int/"..outputDir.."/%{prj.name}")
 files
 {
 	"%{prj.name}/**.cpp",
-	"%{prj.name}/**.h"
+	"%{prj.name}/**.h",
 }
 
 includedirs
 {
 	"%{prj.name}",
 	"%{IncludeDir.VEGAENGINE}/include/",
+	"%{IncludeDir.IMGUI}/",
 	"%{wks.location}/Vendor/SFML-2.6.1/include/",
-	"%{IncludeDir.IMGUI}/include",
 }
 
 libdirs
 {
 	"%{IncludeDir.SFML}/lib/",
 	"%{IncludeDir.SFML}/lib/%{cfg.buildcfg}/",
-	"%{IncludeDir.VEGAENGINE}/lib/%{cfg.buildcfg}/",
 	"%{IncludeDir.IMGUI}/lib/%{cfg.buildcfg}/",
+	"%{IncludeDir.VEGAENGINE}/lib/%{cfg.buildcfg}/",
 }
 
 links
@@ -53,8 +53,8 @@ links
 	"sfml-system.lib",
 	"sfml-window.lib",
 	"opengl32.lib",
-	"ImGui.lib",
 	"VegaEngine.lib",
+	"ImGui.lib",
 }
 
 prebuildcommands 
